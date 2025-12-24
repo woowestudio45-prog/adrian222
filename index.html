@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>JEEMIA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="font-family: Arial; padding: 40px;">
+  <h1>JEEMIA 🤖</h1>
+  <p>Asistente Inteligente para ventas automotrices</p>
+
+  <textarea id="input" placeholder="Escribí tu consulta..." style="width:100%;height:100px;"></textarea>
+  <br><br>
+  <button onclick="enviar()">Enviar</button>
+
+  <pre id="respuesta" style="margin-top:20px;"></pre>
+
+  <script>
+    function enviar() {
+      document.getElementById("respuesta").innerText =
+        "JEEMIA está online 🚀 Próximo paso: conectar Gemini";
+    }
+  </script>
+</body>
+</html>
