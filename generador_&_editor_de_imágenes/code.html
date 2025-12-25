@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>JEEMIA - Generador &amp; Editor de Imágenes</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1258e2",
+                        "secondary": "#d91e6b", 
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1a2332",
+                        "surface-border": "#232f48",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    backgroundImage: {
+                        'gradient-ai': 'linear-gradient(135deg, #1258e2 0%, #d91e6b 100%)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for dark theme elegance */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111722; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #232f48; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #324467; 
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden h-screen flex transition-colors duration-200">
+<!-- Sidebar Navigation -->
+<aside class="w-72 h-full bg-[#111722] border-r border-surface-border flex flex-col justify-between hidden md:flex shrink-0 relative z-20">
+<div class="flex flex-col h-full">
+<!-- Brand -->
+<div class="px-6 py-6 flex items-center gap-4">
+<div class="bg-center bg-no-repeat bg-cover rounded-xl size-10 shadow-lg shadow-primary/20" data-alt="JEEMIA abstract blue logo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAMpuAtyTsLhjy9kuIEaITEs2eT5GZ4tenGljI0U7fYL4biTrFG60PxDdOqXbsgd6E7xoo-g9pKz08EYoJQqWz4O1loQjgALAe5OgUEFq4yskPU_HztJ76GHhXLTBasJxdS4KxmZnPrY6rbGIN3KozJb9sxCYXvrrv068D98U7qxlVOKj7f9VqEBaKW8Z03kmDK4Ttw3KCdTvBOH_rHg-VnrEjnxqMvWLI9bvXlz2q-s8_ELfdy0hPK70M9njslIjVaTxg_fn2Rnbs");'></div>
+<div class="flex flex-col">
+<h1 class="text-white text-xl font-extrabold tracking-wide leading-none">JEEMIA</h1>
+<p class="text-[#92a4c9] text-xs font-medium tracking-wider mt-1">Agente Automotriz</p>
+</div>
+</div>
+<!-- Menu -->
+<nav class="flex-1 overflow-y-auto py-4 px-4 space-y-1.5">
+<div class="px-3 pb-2 text-xs font-bold text-[#4b5c7e] uppercase tracking-wider">Principal</div>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#92a4c9] hover:bg-surface-border hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-surface-border text-white shadow-inner border border-white/5 relative overflow-hidden group" href="#">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-50"></div>
+<span class="material-symbols-outlined fill text-primary relative z-10">palette</span>
+<span class="text-sm font-bold relative z-10">Editor de Imágenes</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#92a4c9] hover:bg-surface-border hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:text-secondary transition-colors">chat_bubble</span>
+<span class="text-sm font-medium">Chats de Ventas</span>
+</a>
+<div class="px-3 pb-2 pt-6 text-xs font-bold text-[#4b5c7e] uppercase tracking-wider">Herramientas</div>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#92a4c9] hover:bg-surface-border hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">smart_toy</span>
+<span class="text-sm font-medium">Configuración IA</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#92a4c9] hover:bg-surface-border hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">folder_open</span>
+<span class="text-sm font-medium">Galería</span>
+</a>
+</nav>
+<!-- User Footer -->
+<div class="p-4 border-t border-surface-border bg-[#0d121c]">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-surface-border transition-colors" href="#">
+<div class="size-9 rounded-full bg-gradient-to-br from-primary to-secondary p-[2px]" data-alt="User Avatar border">
+<div class="w-full h-full rounded-full bg-[#111722] flex items-center justify-center">
+<span class="text-xs font-bold text-white">JD</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<p class="text-white text-sm font-bold truncate">John Dealer</p>
+<p class="text-[#92a4c9] text-xs truncate">Plan Enterprise</p>
+</div>
+<span class="material-symbols-outlined text-[#92a4c9] text-lg ml-auto">settings</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="flex-1 flex flex-col h-full min-w-0 overflow-hidden relative z-10">
+<!-- Top Header -->
+<header class="h-16 border-b border-surface-border bg-[#111722]/90 backdrop-blur-md flex items-center justify-between px-6 shrink-0 z-30 sticky top-0">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-white material-symbols-outlined p-2 hover:bg-surface-border rounded-lg">menu</button>
+<!-- Breadcrumbs -->
+<nav class="hidden sm:flex items-center text-sm font-medium">
+<a class="text-[#92a4c9] hover:text-white transition-colors" href="#">Dashboard</a>
+<span class="material-symbols-outlined text-[#4b5563] text-lg mx-1">chevron_right</span>
+<span class="text-white">Generador Creativo</span>
+</nav>
+</div>
+<div class="flex items-center gap-3 sm:gap-6">
+<div class="flex items-center gap-2">
+<span class="hidden sm:inline text-xs font-medium text-[#92a4c9] bg-surface-border px-2 py-1 rounded">2,450 Créditos IA</span>
+<button class="size-9 flex items-center justify-center text-[#92a4c9] hover:text-white rounded-lg hover:bg-surface-border transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-secondary rounded-full border border-[#111722]"></span>
+</button>
+</div>
+<div class="h-8 w-px bg-surface-border hidden sm:block"></div>
+<button class="hidden sm:flex items-center gap-2 px-4 py-2 bg-[#25d366]/10 text-[#25d366] border border-[#25d366]/20 rounded-lg text-sm font-bold hover:bg-[#25d366] hover:text-white transition-all">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+<span>Conectar WhatsApp</span>
+</button>
+</div>
+</header>
+<!-- Main Scrollable Area -->
+<div class="flex-1 overflow-y-auto bg-background-dark p-4 md:p-6 lg:p-8">
+<div class="max-w-[1800px] mx-auto h-full flex flex-col">
+<!-- Page Title Section -->
+<div class="mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="text-3xl font-black text-white leading-tight tracking-tight">Estudio Creativo</h2>
+<p class="text-[#92a4c9] mt-1 text-base max-w-2xl">Genera y edita imágenes optimizadas para tus campañas de ventas automotrices en WhatsApp.</p>
+</div>
+</div>
+<!-- Two-Column Layout -->
+<div class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-[700px]">
+<!-- Left Column: Controls & History -->
+<div class="lg:col-span-4 xl:col-span-3 flex flex-col gap-6">
+<!-- Prompt & Generation Card -->
+<div class="bg-surface-dark p-5 rounded-xl border border-surface-border shadow-xl flex flex-col gap-4 relative overflow-hidden">
+<!-- Subtle Glow -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -z-0 pointer-events-none"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-center mb-3">
+<label class="text-white font-bold text-sm">Prompt de IA</label>
+<button class="text-xs text-secondary font-medium flex items-center gap-1 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span> 
+                                        Mejorar Prompt
+                                    </button>
+</div>
+<textarea class="w-full bg-[#111722] border border-[#324467] rounded-lg p-3 text-white text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none resize-none h-32 placeholder:text-gray-600 transition-shadow" placeholder="Describe el vehículo, color, fondo e iluminación (ej. SUV azul medianoche en ciudad moderna)..."></textarea>
+</div>
+<!-- Parameters -->
+<div class="space-y-4 relative z-10">
+<div>
+<label class="text-[#92a4c9] text-xs font-bold uppercase tracking-wider mb-2 block">Estilo Visual</label>
+<div class="grid grid-cols-2 gap-2">
+<button class="px-3 py-2.5 rounded-lg bg-surface-border/50 border border-primary text-white text-sm font-medium flex items-center justify-center gap-2 shadow-[0_0_10px_rgba(18,88,226,0.15)]">
+<span class="material-symbols-outlined text-[18px]">photo_camera</span> Realista
+                                        </button>
+<button class="px-3 py-2.5 rounded-lg bg-[#111722] border border-[#324467] text-[#92a4c9] text-sm font-medium hover:text-white hover:border-[#4b6391] transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">movie</span> Estudio
+                                        </button>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="text-[#92a4c9] text-xs font-bold uppercase tracking-wider mb-2 block">Formato</label>
+<div class="relative">
+<select class="w-full bg-[#111722] border border-[#324467] rounded-lg py-2.5 pl-3 pr-8 text-white text-sm outline-none appearance-none focus:border-primary cursor-pointer">
+<option>1:1 Cuadrado</option>
+<option selected="">4:5 Vertical</option>
+<option>16:9 Horizontal</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-2.5 text-[#92a4c9] pointer-events-none">expand_more</span>
+</div>
+</div>
+<div>
+<label class="text-[#92a4c9] text-xs font-bold uppercase tracking-wider mb-2 block">Iluminación</label>
+<div class="relative">
+<select class="w-full bg-[#111722] border border-[#324467] rounded-lg py-2.5 pl-3 pr-8 text-white text-sm outline-none appearance-none focus:border-primary cursor-pointer">
+<option>Natural</option>
+<option>Estudio</option>
+<option>Neón</option>
+<option>Atardecer</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-2.5 text-[#92a4c9] pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Generate Button -->
+<button class="mt-2 w-full py-3.5 bg-gradient-ai rounded-lg text-white font-bold text-sm tracking-wide shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:scale-[1.02] transition-all active:scale-[0.98] flex items-center justify-center gap-2 group">
+<span class="material-symbols-outlined group-hover:animate-spin">shutter_speed</span>
+                                GENERAR IMAGEN
+                            </button>
+</div>
+<!-- Recent History -->
+<div class="flex-1 min-h-[200px] flex flex-col">
+<h3 class="text-white font-bold text-sm mb-3 flex items-center justify-between">
+<span>Historial Reciente</span>
+<a class="text-[#92a4c9] text-xs font-normal hover:text-white" href="#">Ver todo</a>
+</h3>
+<div class="grid grid-cols-2 gap-3 overflow-y-auto pr-1 pb-1">
+<!-- History Item 1 -->
+<div class="aspect-[4/5] rounded-lg bg-surface-border relative group cursor-pointer overflow-hidden border border-transparent hover:border-primary transition-all">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Blue car front view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfiWVeQImUh18ouVsrCNhvkbftKj9RaI1B5uzp1pxWCMIInJoEpv5vE1smmSISuKjxrC7ZSGWH6wbtvLgTaAcHVlmBmtmkNNjbTfd8rl6XLx7NW2jKF_O3Ax-N9M6psFACQvmFzdeUq837cJ0uJlA-8fAEqnZuHG8WWX6WIkWBsKeHHcVVPLKwULSkS-bHa6VBYz_hWf8dfOdF5P8lVJd27Iul-s0v1i0GaHS3QRu1ONln5kL7sv5OXrX_BY3rF7PfHwZNPZWux3k"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-2">
+<span class="text-white text-xs font-medium">Mercedes AMG</span>
+</div>
+</div>
+<!-- History Item 2 -->
+<div class="aspect-[4/5] rounded-lg bg-surface-border relative group cursor-pointer overflow-hidden border border-transparent hover:border-primary transition-all">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Dark sports car" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPlZk621unhZ0yX3WZKRjkgZ6HyiThj2St_Um8-daLXgNGzYI58HgtR_6oAzoFwp2n5n1anxDY3S6oqNQMk96PoPax8smwqx9oJHapnTucTIplX1CcIrLSlYYCh6YG2eb08IlPv_KibN5T32OOo8dhJC9zJuBQKGuw9ZVv8QIXspAZ06X9DOPb1xnnmXvStXgIaeXSOAN8LXfmCWwLwKda4GSmiZl8kQgIGLy6_AD-S9ODlKhJOA8p3nk6t86AUvLSP5FTtBQP_RI"/>
+</div>
+<!-- History Item 3 -->
+<div class="aspect-[4/5] rounded-lg bg-surface-border relative group cursor-pointer overflow-hidden border border-transparent hover:border-primary transition-all">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Car interior" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBU-iC7KOj3UHdqB1_UtOobvNrsS5H2q8xhJgF0s9rWzf3Yt52a__DlGc63SoKxwI804FAq1J6B2b6aNHRMwWMGv3En6ZNCNvfByyj5CE8p0D8pEH-GIGzD3MqHtskE6JXgZy2Lha5WDjQ_o9J3VV8iy5Y4w0QXzo46tgZdnqhIz85UGMinE9iQJSoLmhtMl1Pf-XyrgI2A5iCu3g5buH5WMZSL91vPV3oH7oIqRYZO36Il1-Q97HKwtrKt8UhSGBRHzIPliOkwQAg"/>
+</div>
+<!-- Placeholder -->
+<div class="aspect-[4/5] rounded-lg bg-[#111722] border border-dashed border-[#324467] flex flex-col items-center justify-center gap-2 text-[#4b5c7e] hover:text-[#92a4c9] hover:border-[#92a4c9] transition-all cursor-pointer">
+<span class="material-symbols-outlined text-3xl">add_photo_alternate</span>
+<span class="text-xs">Cargar Referencia</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Canvas & Preview -->
+<div class="lg:col-span-8 xl:col-span-9 flex flex-col h-full bg-surface-dark rounded-xl border border-surface-border shadow-2xl relative overflow-hidden ring-1 ring-white/5">
+<!-- Toolbar Overlay -->
+<div class="h-14 bg-[#1a2332]/90 backdrop-blur-sm border-b border-surface-border flex items-center justify-between px-4 absolute top-0 w-full z-20">
+<!-- Left Tools -->
+<div class="flex items-center gap-1">
+<button class="size-9 rounded hover:bg-surface-border text-[#92a4c9] hover:text-white flex items-center justify-center transition-colors tooltip" title="Deshacer">
+<span class="material-symbols-outlined text-[20px]">undo</span>
+</button>
+<button class="size-9 rounded hover:bg-surface-border text-[#92a4c9] hover:text-white flex items-center justify-center transition-colors" title="Rehacer">
+<span class="material-symbols-outlined text-[20px]">redo</span>
+</button>
+<div class="w-px h-5 bg-[#324467] mx-2"></div>
+<button class="size-9 rounded hover:bg-surface-border text-[#92a4c9] hover:text-white flex items-center justify-center transition-colors" title="Recortar">
+<span class="material-symbols-outlined text-[20px]">crop</span>
+</button>
+<button class="size-9 rounded hover:bg-surface-border text-[#92a4c9] hover:text-white flex items-center justify-center transition-colors" title="Añadir Texto">
+<span class="material-symbols-outlined text-[20px]">title</span>
+</button>
+<button class="size-9 rounded hover:bg-surface-border text-[#92a4c9] hover:text-white flex items-center justify-center transition-colors" title="Filtros">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+<button class="size-9 rounded hover:bg-surface-border text-[#92a4c9] hover:text-white flex items-center justify-center transition-colors" title="Borrado Mágico">
+<span class="material-symbols-outlined text-[20px]">ink_eraser</span>
+</button>
+</div>
+<!-- Right Zoom -->
+<div class="flex items-center gap-2 bg-[#111722] rounded-lg p-1 border border-[#324467]">
+<button class="size-7 rounded hover:bg-[#232f48] text-[#92a4c9] hover:text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<span class="text-xs font-mono text-white min-w-[3ch] text-center">85%</span>
+<button class="size-7 rounded hover:bg-[#232f48] text-[#92a4c9] hover:text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+<!-- Canvas Workspace -->
+<div class="flex-1 bg-[#0d1017] flex items-center justify-center overflow-hidden relative group">
+<!-- Checkered Background Pattern using pure CSS -->
+<div class="absolute inset-0 opacity-10" style="background-image: linear-gradient(45deg, #1a2332 25%, transparent 25%), linear-gradient(-45deg, #1a2332 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #1a2332 75%), linear-gradient(-45deg, transparent 75%, #1a2332 75%);
+                                         background-size: 20px 20px;
+                                         background-position: 0 0, 0 10px, 10px -10px, -10px 0px;">
+</div>
+<!-- The Artboard -->
+<div class="relative shadow-2xl transition-transform duration-300 ease-out z-10">
+<img class="max-h-[550px] w-auto object-contain rounded shadow-black/80 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)] border border-white/5 block" data-alt="Modern blue SUV side profile studio shot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdj1TiJkQMiFprKSB_vDG0nMCzBewMXnuwr4U_UKulKmQUyioIplnoCCICNsNDMoeXpbMkh4Y0N3WBdN8a5PQven9EbQFAb7Qn1a2b_rXNHAay7fByhRGguv6ObWEd07w-LYCuutUKB-vjiQPc0JKV-uthWLFjKN14_nA0mk6baW6cuJjW0ZGEMfkmvqLg0RJDy7yCE6XHDlTpvxVLNTu9W67ilmea6Y-spSMajxLs76d6YHxfzAyifE6BW2BtWzsnyPyG2CPJ-aA"/>
+<!-- Hover Selection Outline -->
+<div class="absolute inset-0 border-2 border-primary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none rounded"></div>
+</div>
+<!-- Floating Quick Actions -->
+<div class="absolute bottom-24 flex gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-20">
+<button class="bg-[#1a2332]/90 backdrop-blur text-white px-4 py-2 rounded-full border border-white/10 text-sm font-medium hover:bg-primary transition-colors shadow-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">auto_fix_high</span> Upscale 4K
+                                </button>
+<button class="bg-[#1a2332]/90 backdrop-blur text-white px-4 py-2 rounded-full border border-white/10 text-sm font-medium hover:bg-secondary transition-colors shadow-lg flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">compare</span> Comparar
+                                </button>
+</div>
+</div>
+<!-- Bottom Action Bar -->
+<div class="h-20 bg-surface-dark border-t border-surface-border px-6 flex items-center justify-between shrink-0 z-20">
+<!-- File Info -->
+<div class="flex items-center gap-4">
+<div class="size-10 rounded bg-[#111722] border border-[#324467] flex items-center justify-center text-[#92a4c9]">
+<span class="material-symbols-outlined">image</span>
+</div>
+<div class="flex flex-col">
+<span class="text-white text-sm font-bold tracking-wide">jeemia_gen_v2_482.png</span>
+<div class="flex items-center gap-2 text-xs text-[#92a4c9]">
+<span>4:5 Vertical</span>
+<span class="size-1 rounded-full bg-[#324467]"></span>
+<span>2.4 MB</span>
+</div>
+</div>
+</div>
+<!-- CTAs -->
+<div class="flex items-center gap-3">
+<button class="px-5 py-2.5 rounded-lg border border-[#324467] text-white hover:bg-surface-border transition-colors font-semibold text-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span class="hidden sm:inline">Guardar</span>
+</button>
+<button class="px-6 py-2.5 rounded-lg bg-[#25d366] hover:bg-[#1fb556] text-white font-bold text-sm shadow-lg shadow-green-900/30 hover:shadow-green-900/50 flex items-center gap-2 transition-all transform hover:-translate-y-0.5">
+<span class="material-symbols-outlined text-[22px]">chat</span>
+<span>Descargar para WhatsApp</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

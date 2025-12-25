@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard Principal - JEEMIA</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1258e2",
+              "accent": "#d946ef", /* Magenta vibrant added for context */
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+              "surface-dark": "#1a2230",
+              "surface-dark-highlight": "#232f48",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-effect {
+            background: rgba(26, 34, 48, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #ffffff, #92a4c9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px -10px rgba(18, 88, 226, 0.2);
+            border-color: rgba(18, 88, 226, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden selection:bg-primary selection:text-white">
+<div class="flex h-screen w-full">
+<!-- Sidebar -->
+<aside class="hidden lg:flex w-72 flex-col justify-between border-r border-[#232f48] bg-[#0b0f17] p-6 shrink-0 relative z-20">
+<div>
+<!-- Logo -->
+<div class="flex items-center gap-3 mb-10 px-2">
+<div class="bg-gradient-to-br from-primary to-accent aspect-square rounded-xl size-10 flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-white text-2xl">smart_toy</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-white text-xl font-bold leading-none tracking-wide">JEEMIA</h1>
+<p class="text-[#92a4c9] text-xs font-medium tracking-wider mt-1">AI AUTO SALES</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white shadow-lg shadow-primary/20 group transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<p class="text-sm font-bold">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#92a4c9] hover:bg-[#1a2230] hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">image</span>
+<p class="text-sm font-medium">Generador Imágenes</p>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#92a4c9] hover:bg-[#1a2230] hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-accent transition-colors">mic</span>
+<p class="text-sm font-medium">Generador Audios</p>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#92a4c9] hover:bg-[#1a2230] hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-green-500 transition-colors">chat</span>
+<p class="text-sm font-medium">WhatsApp</p>
+<span class="ml-auto bg-primary/20 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full">12</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#92a4c9] hover:bg-[#1a2230] hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-yellow-500 transition-colors">bar_chart</span>
+<p class="text-sm font-medium">Estadísticas</p>
+</a>
+</nav>
+</div>
+<div class="flex flex-col gap-4">
+<div class="glass-effect rounded-xl p-4 flex flex-col gap-3">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-primary/30" data-alt="User profile picture of Adrian" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAO0YPA32F22Ztfpk48mfPTw82TaudsBQHZH5wxiAEtVmdHMmeBIslTMAoKVDEPwAFIjRPsfGdNZ2Y3OtWGbxSr4WsXZOk9zPUrEV-01ay-EELhIlXI0EF-PNIIorIpc_kJf13pYSgn6N2pKjl27mU3vx5NLwS5mCdP1x5HvWJgDWAMIdIv2zkN8aidt4YMuwlz5sYTRZ6qwvrOp5mLVjJ12aEnMgpOw21stPP-U2VZSX9UWJK51No3gqVoTy7tbtpcs4h4cWFlpDk");'></div>
+<div class="flex flex-col overflow-hidden">
+<p class="text-white text-sm font-bold truncate">Adrián M.</p>
+<p class="text-green-500 text-xs font-medium flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                                Agente Activo
+                            </p>
+</div>
+</div>
+</div>
+<button class="flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl h-10 px-4 bg-[#1a2230] hover:bg-[#232f48] border border-[#232f48] text-[#92a4c9] hover:text-white transition-colors text-sm font-bold">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+<span class="truncate">Cerrar Sesión</span>
+</button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-y-auto bg-background-light dark:bg-background-dark relative">
+<!-- Ambient Background Glows -->
+<div class="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-primary/5 via-transparent to-transparent pointer-events-none"></div>
+<div class="absolute top-20 right-20 w-96 h-96 bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="absolute bottom-20 left-20 w-64 h-64 bg-accent/5 rounded-full blur-[80px] pointer-events-none"></div>
+<div class="layout-content-container max-w-[1400px] mx-auto w-full p-6 md:p-10 flex flex-col gap-8 relative z-10">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 animate-fade-in">
+<div class="flex flex-col gap-1">
+<p class="text-[#92a4c9] text-sm font-medium uppercase tracking-wider">Centro de Comando</p>
+<h2 class="text-white text-3xl md:text-4xl font-black leading-tight tracking-tight">Hola, <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Adrián</span></h2>
+<p class="text-[#92a4c9] text-base mt-1">Aquí tienes el resumen de tu agente de ventas IA hoy.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="hidden md:flex items-center justify-center size-10 rounded-full bg-[#1a2230] text-white hover:bg-[#232f48] transition-colors relative">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-2 right-2 size-2.5 bg-red-500 border-2 border-[#1a2230] rounded-full"></span>
+</button>
+<button class="flex items-center gap-2 px-5 h-11 bg-primary hover:bg-blue-600 text-white text-sm font-bold rounded-xl transition-all shadow-lg shadow-primary/25">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+<span>Configurar Agente</span>
+</button>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+<!-- Stat Card 1 -->
+<div class="glass-effect p-6 rounded-2xl flex flex-col gap-4 border-t-2 border-t-primary/50 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">groups</span>
+</div>
+<div class="flex justify-between items-start">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">person_add</span>
+</div>
+<span class="flex items-center text-[#0bda5e] text-xs font-bold bg-[#0bda5e]/10 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span> +12%
+                            </span>
+</div>
+<div>
+<p class="text-[#92a4c9] text-sm font-medium">Leads Generados</p>
+<p class="text-white text-3xl font-bold mt-1">124</p>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="glass-effect p-6 rounded-2xl flex flex-col gap-4 border-t-2 border-t-accent/50 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-accent">chat_bubble</span>
+</div>
+<div class="flex justify-between items-start">
+<div class="p-2 bg-accent/10 rounded-lg text-accent">
+<span class="material-symbols-outlined">send</span>
+</div>
+<span class="flex items-center text-[#0bda5e] text-xs font-bold bg-[#0bda5e]/10 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span> +5%
+                            </span>
+</div>
+<div>
+<p class="text-[#92a4c9] text-sm font-medium">Mensajes Enviados</p>
+<p class="text-white text-3xl font-bold mt-1">1,450</p>
+</div>
+</div>
+<!-- Stat Card 3 -->
+<div class="glass-effect p-6 rounded-2xl flex flex-col gap-4 border-t-2 border-t-blue-400/50 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-blue-400">forum</span>
+</div>
+<div class="flex justify-between items-start">
+<div class="p-2 bg-blue-400/10 rounded-lg text-blue-400">
+<span class="material-symbols-outlined">forum</span>
+</div>
+<span class="flex items-center text-[#0bda5e] text-xs font-bold bg-[#0bda5e]/10 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span> +2%
+                            </span>
+</div>
+<div>
+<p class="text-[#92a4c9] text-sm font-medium">Tasa de Respuesta</p>
+<p class="text-white text-3xl font-bold mt-1">48%</p>
+</div>
+</div>
+<!-- Stat Card 4 -->
+<div class="glass-effect p-6 rounded-2xl flex flex-col gap-4 border-t-2 border-t-purple-500/50 relative overflow-hidden group">
+<div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-purple-500">event_available</span>
+</div>
+<div class="flex justify-between items-start">
+<div class="p-2 bg-purple-500/10 rounded-lg text-purple-500">
+<span class="material-symbols-outlined">event</span>
+</div>
+<span class="flex items-center text-[#0bda5e] text-xs font-bold bg-[#0bda5e]/10 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span> +8%
+                            </span>
+</div>
+<div>
+<p class="text-[#92a4c9] text-sm font-medium">Citas Agendadas</p>
+<p class="text-white text-3xl font-bold mt-1">15</p>
+</div>
+</div>
+</div>
+<!-- Tools Section -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h3 class="text-white text-xl font-bold">Herramientas Principales</h3>
+<a class="text-primary text-sm font-bold hover:underline" href="#">Ver todas</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Tool 1 -->
+<div class="card-hover group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer transition-all duration-300">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Futuristic car design rendering" style='background-image: linear-gradient(0deg, rgba(16, 22, 34, 0.9) 0%, rgba(16, 22, 34, 0.4) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuAxPWyVrBVWCcnBpqKHzhwdlnauSDLrOy5YNwrN871tRNOnxIIIFlqDL7yWphMBjmDmLxbD8-mx8edbenYczqIAOjBXafabrK7jlxVTKdolU_WhHB28xle2GHt_6it07bFFiRaoC6iAl3J4ua6WqeJ_M-UmGHyWPgCNT8Rke_EfGbgeB7JLNQ647_RBZ4FsrE4EV5-miEj8FbrzqKMG_FqTVg093ZtpFPXk9WyBIPyPpv1NiMfFpsbLIayG3zD6ep-tKxs5ksCnEzc");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-80"></div>
+<div class="relative z-10 flex flex-col justify-end h-full p-6">
+<div class="bg-primary/20 backdrop-blur-md w-fit p-2 rounded-lg mb-3">
+<span class="material-symbols-outlined text-white">image</span>
+</div>
+<h4 class="text-white text-lg font-bold mb-1">Generador Imágenes</h4>
+<p class="text-[#92a4c9] text-xs mb-4 line-clamp-2">Crea visuales de vehículos con IA para tus clientes.</p>
+<button class="flex items-center gap-2 text-primary text-sm font-bold group-hover:text-white transition-colors">
+                                    Generar
+                                    <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Tool 2 -->
+<div class="card-hover group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer transition-all duration-300">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Sound wave visualization abstract" style='background-image: linear-gradient(0deg, rgba(16, 22, 34, 0.9) 0%, rgba(16, 22, 34, 0.4) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuAe9VlKLK-bjw_vNJeV-exzSctKqDKpkpuLRTlf_odArQ0LGsPO1iSGo3YfI0ZjYwsTSaW5EzSDOF53po74IvMLyCYld0Ybs_5zkem8xGtufg8GRp7Asi7xfooVtKsnil8vX66Vp_NqJ3HnzvlhVJeICPQ21NCqLatmWUVVLeJUEJS8xz22y1OTnzADfie-NxiKF7DO1YZJu8LEkClcOo_jkJRKWNjq7f0bwuSB6djFmaqVygYmlXDstfb8mFIDQpx4Y8Fb4LI0tOA");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-80"></div>
+<div class="relative z-10 flex flex-col justify-end h-full p-6">
+<div class="bg-accent/20 backdrop-blur-md w-fit p-2 rounded-lg mb-3">
+<span class="material-symbols-outlined text-white">graphic_eq</span>
+</div>
+<h4 class="text-white text-lg font-bold mb-1">Generador Audios</h4>
+<p class="text-[#92a4c9] text-xs mb-4 line-clamp-2">Convierte texto a voz natural para mensajes de WhatsApp.</p>
+<button class="flex items-center gap-2 text-accent text-sm font-bold group-hover:text-white transition-colors">
+                                    Crear Audio
+                                    <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Tool 3 -->
+<div class="card-hover group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer transition-all duration-300">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Smartphone displaying chat interface" style='background-image: linear-gradient(0deg, rgba(16, 22, 34, 0.9) 0%, rgba(16, 22, 34, 0.4) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBlM20UFFwgkPrfJ_0773Z9moepeZbo0_4SwPu2cpLu-eg9i0bY4hQpJiskr_Ic_6tKpakH60F5XgVhy42TDBrKZKoba__S0hSNIvHIl8Unvz-STaL7NMS5fIdT85-GbzIXLoN2lI24AvSS9tqioF5knNGoDbpX9lgpE4ZN_Q099f1rWzAp3w41JFFUxhkVkepghioHg8XvZTp45VNWiac4vpD7Gv5ORI1ZLdhIYN7rtxthRKBCAjaTMD02UNRuxcj6Tf-Rmt1kT2s");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-80"></div>
+<div class="relative z-10 flex flex-col justify-end h-full p-6">
+<div class="bg-green-500/20 backdrop-blur-md w-fit p-2 rounded-lg mb-3">
+<span class="material-symbols-outlined text-white">chat</span>
+</div>
+<h4 class="text-white text-lg font-bold mb-1">WhatsApp CRM</h4>
+<p class="text-[#92a4c9] text-xs mb-4 line-clamp-2">Gestiona campañas y respuestas automáticas.</p>
+<button class="flex items-center gap-2 text-green-500 text-sm font-bold group-hover:text-white transition-colors">
+                                    Abrir Chat
+                                    <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Tool 4 -->
+<div class="card-hover group relative overflow-hidden rounded-2xl aspect-[4/3] cursor-pointer transition-all duration-300">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Abstract data visualization grid" style='background-image: linear-gradient(0deg, rgba(16, 22, 34, 0.9) 0%, rgba(16, 22, 34, 0.4) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBwYJCrR6-YisVSs4ojbhqwijUJRhkxcRxlIUa_OE-jRpgotlaD7iauauobAVOogKrwtSQ0Urfiv7_v4YqtHA8k6TFfKR1AYAP_Kuuy9LfLGjaOkxUa7x1WAKdFzIotp44kGp97YwwFq-aSOs4Aiu4Q5m_NJLnPenQ2u2P-lZbbGRYTUz3Yi3YVCiI5J99KLLYt_rDMcfMMaV0DjPvx3mKDk0wQ4AEPA1lAbcWTZJCUcrz2Tsi53mqYIU74eddEzd5nZWwQ69J8zjw");'></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-80"></div>
+<div class="relative z-10 flex flex-col justify-end h-full p-6">
+<div class="bg-yellow-500/20 backdrop-blur-md w-fit p-2 rounded-lg mb-3">
+<span class="material-symbols-outlined text-white">analytics</span>
+</div>
+<h4 class="text-white text-lg font-bold mb-1">Analíticas</h4>
+<p class="text-[#92a4c9] text-xs mb-4 line-clamp-2">Visualiza el rendimiento y ROI de tus campañas.</p>
+<button class="flex items-center gap-2 text-yellow-500 text-sm font-bold group-hover:text-white transition-colors">
+                                    Ver Reportes
+                                    <span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Recent Activity & Quick Tips -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-6">
+<!-- Recent Activity -->
+<div class="col-span-1 lg:col-span-2 glass-effect rounded-2xl p-6">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-white text-lg font-bold">Actividad Reciente del Agente</h3>
+<button class="text-[#92a4c9] hover:text-white text-sm">Ver todo</button>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Activity Item 1 -->
+<div class="flex gap-4 items-center p-3 rounded-xl hover:bg-[#232f48]/50 transition-colors cursor-pointer group">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">schedule_send</span>
+</div>
+<div class="flex-1">
+<p class="text-white text-sm font-medium">Cita agendada con Carlos Ruiz</p>
+<p class="text-[#92a4c9] text-xs">Para Test Drive: Toyota Corolla 2024</p>
+</div>
+<span class="text-[#92a4c9] text-xs">Hace 5 min</span>
+</div>
+<!-- Activity Item 2 -->
+<div class="flex gap-4 items-center p-3 rounded-xl hover:bg-[#232f48]/50 transition-colors cursor-pointer group">
+<div class="size-10 rounded-full bg-accent/10 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</div>
+<div class="flex-1">
+<p class="text-white text-sm font-medium">Audio generado para Campaña SUV</p>
+<p class="text-[#92a4c9] text-xs">Mensaje de seguimiento #2</p>
+</div>
+<span class="text-[#92a4c9] text-xs">Hace 23 min</span>
+</div>
+<!-- Activity Item 3 -->
+<div class="flex gap-4 items-center p-3 rounded-xl hover:bg-[#232f48]/50 transition-colors cursor-pointer group">
+<div class="size-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-500 group-hover:bg-green-500 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">done_all</span>
+</div>
+<div class="flex-1">
+<p class="text-white text-sm font-medium">Leads cualificados (Batch #405)</p>
+<p class="text-[#92a4c9] text-xs">24 nuevos leads marcados como "Interesado"</p>
+</div>
+<span class="text-[#92a4c9] text-xs">Hace 1h</span>
+</div>
+</div>
+</div>
+<!-- Mini Visual / Chart Placeholder -->
+<div class="col-span-1 glass-effect rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary to-accent opacity-20 blur-2xl rounded-full translate-x-10 -translate-y-10"></div>
+<div>
+<h3 class="text-white text-lg font-bold mb-2">Rendimiento Semanal</h3>
+<p class="text-[#92a4c9] text-sm">Tus conversiones están por encima del promedio.</p>
+</div>
+<div class="h-32 w-full mt-6 flex items-end gap-2 px-2">
+<!-- Simple CSS Chart Bars -->
+<div class="flex-1 bg-[#232f48] rounded-t-sm h-[40%] hover:bg-primary transition-colors hover:h-[45%]"></div>
+<div class="flex-1 bg-[#232f48] rounded-t-sm h-[60%] hover:bg-primary transition-colors hover:h-[65%]"></div>
+<div class="flex-1 bg-[#232f48] rounded-t-sm h-[30%] hover:bg-primary transition-colors hover:h-[35%]"></div>
+<div class="flex-1 bg-[#232f48] rounded-t-sm h-[75%] hover:bg-primary transition-colors hover:h-[80%]"></div>
+<div class="flex-1 bg-[#232f48] rounded-t-sm h-[50%] hover:bg-primary transition-colors hover:h-[55%]"></div>
+<div class="flex-1 bg-[#232f48] rounded-t-sm h-[85%] hover:bg-primary transition-colors hover:h-[90%]"></div>
+<div class="flex-1 bg-gradient-to-t from-primary to-accent rounded-t-md h-[95%] shadow-[0_0_15px_rgba(18,88,226,0.5)]"></div>
+</div>
+<div class="flex justify-between text-[#92a4c9] text-xs mt-2 px-1">
+<span>Lun</span>
+<span>Dom</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

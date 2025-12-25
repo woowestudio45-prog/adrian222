@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>JEEMIA - Carga y Análisis de Bases de Datos</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1258e2",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+              "card-dark": "#1a1f2e", // Slightly lighter than bg-dark for cards
+              "card-hover": "#23293a",
+              "accent-magenta": "#d946ef", // Vibrant magenta for AI accents
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101622; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #232f48; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #324467; 
+        }
+        .glass-effect {
+            background: rgba(26, 31, 46, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        .ai-gradient-text {
+            background: linear-gradient(90deg, #1258e2, #d946ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white h-screen flex overflow-hidden">
+<aside class="w-64 bg-[#111722] border-r border-[#232f48] hidden md:flex flex-col h-full flex-shrink-0 z-20">
+<div class="p-6 pb-2">
+<div class="flex gap-3 items-center mb-8">
+<div class="bg-gradient-to-tr from-primary to-accent-magenta aspect-square rounded-xl size-10 flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-white text-2xl">smart_toy</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-white text-lg font-bold leading-none tracking-tight">JEEMIA</h1>
+<p class="text-[#92a4c9] text-xs font-medium mt-1">Agente Automotriz IA</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#92a4c9] hover:bg-[#232f48] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#92a4c9] hover:bg-[#232f48] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">chat_bubble</span>
+<span class="text-sm font-medium">Mensajería</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-primary/10 text-primary border-l-2 border-primary" href="#">
+<span class="material-symbols-outlined">database</span>
+<span class="text-sm font-bold">Bases de Datos</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#92a4c9] hover:bg-[#232f48] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Configuración</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-[#92a4c9] hover:bg-[#232f48] hover:text-white transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">support_agent</span>
+<span class="text-sm font-medium">Soporte</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto p-4 border-t border-[#232f48]">
+<div class="flex items-center gap-3 px-2 py-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-8 ring-2 ring-[#232f48]" data-alt="User profile picture placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAXGR9lm2pdFi6gJCLWEbTIQibRbT47IE29M-eRAkOuqVva5Ohi4oo_pTBhy_34j8Z41i_7K-tM7kPMUhhV_uUmb4xq6IwPyzWjI4ihlmaYbHd8PcYOrDSKXkaB93RdkJESaC2gTPo3PLRmnY-TURnaLkxdagfdTTtluRIr9wVJSiqGSDwzRy4vFJhofhwTaVdfElbFf5wUlZ1u4_frei8lrsRmcK9V_9BcuVLYikF0KeMMfSAAF8Gb9ncD0lbULUiRIgohZZXMbOU");'></div>
+<div class="flex flex-col">
+<p class="text-white text-sm font-medium leading-none">Carlos V.</p>
+<p class="text-[#92a4c9] text-xs">Admin. General</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col h-full relative overflow-y-auto bg-background-light dark:bg-background-dark">
+<header class="sticky top-0 z-10 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-[#232f48] px-6 py-4">
+<div class="max-w-7xl mx-auto w-full">
+<div class="flex items-center gap-2 mb-2">
+<span class="text-[#92a4c9] text-sm font-medium">Mensajería Inteligente</span>
+<span class="text-[#92a4c9] text-sm">/</span>
+<span class="text-primary text-sm font-medium">Bases de Datos</span>
+</div>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">Carga y Análisis de Datos</h2>
+<p class="text-[#92a4c9] mt-1 text-sm md:text-base">Gestiona tus listas de prospectos y optimiza la comunicación con análisis predictivo.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 rounded-lg border border-[#324467] text-slate-700 dark:text-white text-sm font-semibold hover:bg-[#232f48] transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">history</span>
+                            Historial
+                        </button>
+<button class="px-4 py-2 rounded-lg bg-primary hover:bg-blue-600 text-white text-sm font-bold shadow-lg shadow-primary/20 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">rocket_launch</span>
+                            Iniciar Campaña
+                        </button>
+</div>
+</div>
+</div>
+</header>
+<div class="flex-1 p-6 max-w-7xl mx-auto w-full flex flex-col gap-6">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<div class="lg:col-span-4 flex flex-col gap-4">
+<div class="bg-white dark:bg-card-dark rounded-xl border border-gray-200 dark:border-[#232f48] p-5 shadow-sm h-full flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">cloud_upload</span>
+                                Carga de Archivo
+                            </h3>
+<span class="px-2 py-1 rounded text-xs font-medium bg-blue-500/10 text-blue-500 border border-blue-500/20">Esperando archivo</span>
+</div>
+<div class="flex-1 border-2 border-dashed border-[#324467] rounded-lg bg-[#111722]/50 hover:bg-[#111722] hover:border-primary transition-all flex flex-col items-center justify-center p-6 text-center group cursor-pointer relative overflow-hidden">
+<input accept=".xlsx,.xls,.doc,.docx" class="absolute inset-0 opacity-0 cursor-pointer z-10" type="file"/>
+<div class="size-14 rounded-full bg-[#232f48] flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined text-[#92a4c9] group-hover:text-primary text-3xl transition-colors">upload_file</span>
+</div>
+<p class="text-slate-900 dark:text-white text-base font-bold mb-1">Arrastra y suelta tu archivo</p>
+<p class="text-[#92a4c9] text-sm mb-4">Formatos Excel (.xlsx) o Word (.docx)</p>
+<button class="px-4 py-2 rounded bg-[#232f48] text-white text-sm font-medium hover:bg-primary transition-colors">
+                                Seleccionar Archivo
+                            </button>
+</div>
+<div class="mt-6">
+<div class="flex justify-between items-center mb-2">
+<span class="text-xs font-medium text-white uppercase tracking-wider">Procesando Base de Datos</span>
+<span class="text-xs text-accent-magenta font-bold">85%</span>
+</div>
+<div class="h-2 w-full bg-[#232f48] rounded-full overflow-hidden mb-3">
+<div class="h-full bg-gradient-to-r from-primary via-purple-500 to-accent-magenta w-[85%] rounded-full animate-pulse"></div>
+</div>
+<div class="bg-[#111722] rounded p-3 border border-[#232f48]">
+<p class="text-xs text-[#92a4c9] mb-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-accent-magenta animate-spin">sync</span>
+                                    Reconocimiento de columnas inteligente:
+                                </p>
+<div class="space-y-1.5 pl-1">
+<div class="flex items-center gap-2 text-xs">
+<span class="material-symbols-outlined text-green-500 text-[14px]">check_circle</span>
+<span class="text-slate-300">Nombre del Prospecto</span>
+</div>
+<div class="flex items-center gap-2 text-xs">
+<span class="material-symbols-outlined text-green-500 text-[14px]">check_circle</span>
+<span class="text-slate-300">Teléfono (WhatsApp)</span>
+</div>
+<div class="flex items-center gap-2 text-xs">
+<span class="material-symbols-outlined text-green-500 text-[14px]">check_circle</span>
+<span class="text-slate-300">Ubicación / Ciudad</span>
+</div>
+<div class="flex items-center gap-2 text-xs">
+<span class="material-symbols-outlined text-primary text-[14px] animate-pulse">radio_button_checked</span>
+<span class="text-white font-medium">Historial de Interacción...</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-8 flex flex-col gap-4">
+<div class="bg-white dark:bg-card-dark rounded-xl border border-gray-200 dark:border-[#232f48] p-5 shadow-sm h-full">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-2">
+<div class="bg-accent-magenta/20 p-1.5 rounded-lg">
+<span class="material-symbols-outlined text-accent-magenta">psychology</span>
+</div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Recomendaciones Estratégicas IA</h3>
+</div>
+<div class="flex gap-2">
+<button class="text-xs font-medium text-[#92a4c9] hover:text-white underline decoration-dashed">Ajustar parámetros</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+<div class="bg-background-light dark:bg-[#111722] rounded-lg p-5 border border-gray-200 dark:border-[#232f48] relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-5xl text-primary">mark_chat_unread</span>
+</div>
+<p class="text-[#92a4c9] text-xs font-bold uppercase tracking-wider mb-2">Cantidad Óptima</p>
+<div class="flex items-end gap-2 mb-1">
+<p class="text-3xl font-black text-slate-900 dark:text-white">120</p>
+<span class="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">mensajes/día</span>
+</div>
+<p class="text-xs text-green-400 mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+                                    Maximiza la entrega segura
+                                </p>
+</div>
+<div class="bg-background-light dark:bg-[#111722] rounded-lg p-5 border border-gray-200 dark:border-[#232f48] relative overflow-hidden group hover:border-accent-magenta/50 transition-colors">
+<div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-5xl text-accent-magenta">schedule_send</span>
+</div>
+<p class="text-[#92a4c9] text-xs font-bold uppercase tracking-wider mb-2">Horarios Sugeridos</p>
+<div class="flex flex-col gap-1 mb-1">
+<div class="flex items-center justify-between text-sm">
+<span class="text-slate-900 dark:text-white font-bold">10:00 - 13:00</span>
+<span class="text-xs bg-green-500/20 text-green-400 px-1.5 rounded">Alto</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<span class="text-slate-900 dark:text-white font-bold">16:00 - 18:00</span>
+<span class="text-xs bg-yellow-500/20 text-yellow-400 px-1.5 rounded">Medio</span>
+</div>
+</div>
+<p class="text-xs text-[#92a4c9] mt-2">Basado en historial de apertura.</p>
+</div>
+<div class="bg-background-light dark:bg-[#111722] rounded-lg p-5 border border-gray-200 dark:border-[#232f48] relative overflow-hidden group hover:border-blue-400/50 transition-colors">
+<div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-5xl text-blue-400">alt_route</span>
+</div>
+<p class="text-[#92a4c9] text-xs font-bold uppercase tracking-wider mb-2">Flujo Ideal</p>
+<p class="text-lg font-black text-slate-900 dark:text-white leading-tight mb-1">"Reactivación 2024"</p>
+<p class="text-xs text-slate-400 line-clamp-2 mt-1">
+                                    Enfoque en promociones de financiamiento para leads fríos detectados.
+                                </p>
+<button class="mt-3 text-xs text-primary hover:text-accent-magenta font-bold flex items-center gap-1 transition-colors">
+                                    Ver Guión
+                                    <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="mt-6 flex flex-col sm:flex-row gap-4 items-center justify-between bg-primary/5 p-4 rounded-lg border border-primary/10">
+<div class="flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary mt-1">auto_awesome</span>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">¿Aplicar configuración inteligente?</p>
+<p class="text-xs text-[#92a4c9]">La IA ajustará automáticamente la campaña según estos parámetros.</p>
+</div>
+</div>
+<div class="flex gap-2 w-full sm:w-auto">
+<button class="flex-1 sm:flex-none px-4 py-2 rounded-lg border border-gray-600 text-slate-600 dark:text-gray-300 text-sm font-semibold hover:bg-gray-700/50 transition-colors">
+                                    Ajustar Manualmente
+                                </button>
+<button class="flex-1 sm:flex-none px-4 py-2 rounded-lg bg-gradient-to-r from-primary to-accent-magenta text-white text-sm font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all">
+                                    Aceptar Recomendaciones
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 bg-white dark:bg-card-dark rounded-xl border border-gray-200 dark:border-[#232f48] shadow-sm flex flex-col overflow-hidden min-h-[400px]">
+<div class="p-5 border-b border-gray-200 dark:border-[#232f48] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Clasificación de Resultados</h3>
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+</span>
+</div>
+<p class="text-xs text-[#92a4c9]">Análisis en tiempo real de las respuestas recibidas.</p>
+</div>
+<div class="flex flex-wrap items-center gap-2">
+<div class="flex items-center p-1 bg-background-light dark:bg-[#111722] rounded-lg border border-gray-200 dark:border-[#232f48]">
+<button class="px-3 py-1.5 rounded text-xs font-bold bg-white dark:bg-[#232f48] text-slate-900 dark:text-white shadow-sm">Todos</button>
+<button class="px-3 py-1.5 rounded text-xs font-medium text-[#92a4c9] hover:text-white transition-colors">Respondió</button>
+<button class="px-3 py-1.5 rounded text-xs font-medium text-[#92a4c9] hover:text-white transition-colors">No Respondió</button>
+<button class="px-3 py-1.5 rounded text-xs font-medium text-[#92a4c9] hover:text-white transition-colors">Rebotados</button>
+</div>
+<button class="px-3 py-2 rounded-lg border border-[#324467] text-accent-magenta text-xs font-bold hover:bg-[#232f48] transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">restart_alt</span>
+                            Reprogramar No Respondieron
+                        </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-[#92a4c9]">
+<thead class="bg-gray-50 dark:bg-[#1a1f2e] text-xs uppercase font-semibold text-slate-500 dark:text-[#92a4c9] border-b border-gray-200 dark:border-[#232f48]">
+<tr>
+<th class="px-6 py-4">Prospecto</th>
+<th class="px-6 py-4">Estado</th>
+<th class="px-6 py-4">Intención (IA)</th>
+<th class="px-6 py-4">Motivo / Notas</th>
+<th class="px-6 py-4 text-right">Acción</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 dark:divide-[#232f48]">
+<tr class="hover:bg-gray-50 dark:hover:bg-[#232f48]/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-xs">RM</div>
+<div>
+<p class="text-slate-900 dark:text-white font-medium">Ricardo Méndez</p>
+<p class="text-xs text-[#92a4c9]">+52 55 1234 5678</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-500/10 text-green-500 border border-green-500/20">
+<span class="size-1.5 rounded-full bg-green-500"></span>
+                                        Respondió
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="text-slate-700 dark:text-white font-bold text-xs bg-primary/20 px-2 py-0.5 rounded text-primary">SÍ</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Interés alto</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="truncate max-w-[200px] text-slate-700 dark:text-slate-300">Preguntó por financiamiento a 24 meses.</p>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-[#92a4c9] hover:text-primary transition-colors tooltip" title="Ver conversación">
+<span class="material-symbols-outlined">chat</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-[#232f48]/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-xs">AL</div>
+<div>
+<p class="text-slate-900 dark:text-white font-medium">Ana López</p>
+<p class="text-xs text-[#92a4c9]">+52 55 8765 4321</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-500/10 text-yellow-500 border border-yellow-500/20">
+<span class="size-1.5 rounded-full bg-yellow-500"></span>
+                                        Respondió
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="text-slate-700 dark:text-white font-bold text-xs bg-yellow-500/20 px-2 py-0.5 rounded text-yellow-500">TAL VEZ</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Indeciso</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="truncate max-w-[200px] text-slate-700 dark:text-slate-300">Pide llamar más tarde.</p>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-[#92a4c9] hover:text-primary transition-colors">
+<span class="material-symbols-outlined">schedule</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-[#232f48]/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-gray-500/20 text-gray-400 flex items-center justify-center font-bold text-xs">JP</div>
+<div>
+<p class="text-slate-900 dark:text-white font-medium">Juan Pérez</p>
+<p class="text-xs text-[#92a4c9]">+52 55 5555 5555</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-500/10 text-green-500 border border-green-500/20">
+<span class="size-1.5 rounded-full bg-green-500"></span>
+                                        Respondió
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="text-slate-700 dark:text-white font-bold text-xs bg-red-500/20 px-2 py-0.5 rounded text-red-500">NO</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Descartado</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="truncate max-w-[200px] text-red-400 italic">"Ya compré otro vehículo"</p>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-[#92a4c9] hover:text-red-500 transition-colors" title="Archivar">
+<span class="material-symbols-outlined">archive</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-[#232f48]/50 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-[#324467] text-white flex items-center justify-center font-bold text-xs">CS</div>
+<div>
+<p class="text-slate-900 dark:text-white font-medium">Carla Soto</p>
+<p class="text-xs text-[#92a4c9]">+52 55 9999 0000</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-gray-500/10 text-gray-400 border border-gray-500/20">
+<span class="size-1.5 rounded-full bg-gray-500"></span>
+                                        No Respondió
+                                    </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="text-slate-700 dark:text-[#92a4c9] font-medium">-</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="truncate max-w-[200px] text-slate-500">En espera...</p>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-[#92a4c9] hover:text-primary transition-colors" title="Reenviar">
+<span class="material-symbols-outlined">send</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-gray-200 dark:border-[#232f48] flex items-center justify-between">
+<p class="text-xs text-[#92a4c9]">Mostrando 4 de 1,402 registros</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded border border-gray-200 dark:border-[#324467] text-xs text-[#92a4c9] hover:bg-[#232f48] disabled:opacity-50">Anterior</button>
+<button class="px-3 py-1 rounded border border-gray-200 dark:border-[#324467] text-xs text-[#92a4c9] hover:bg-[#232f48]">Siguiente</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+</body></html>

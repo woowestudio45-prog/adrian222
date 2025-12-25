@@ -1,0 +1,9 @@
+{
+  "name": "JEEMIA AI Sales Agent",
+  "description": "A comprehensive AI-powered sales platform featuring voice synthesis, creative image generation, and intelligent WhatsApp CRM automation for the automotive industry.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
