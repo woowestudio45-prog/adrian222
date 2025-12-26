@@ -9,7 +9,7 @@ export const geminiService = {
   async generateSalesScript(carModel: string, tone: string) {
     const ai = getAIClient();
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-1.5-flash',
       contents: `Write a friendly WhatsApp sales script for a car salesman. Model: ${carModel}. Tone: ${tone}. Start with "Hola {Nombre}, soy Ana de Jeemia Motors..." Use variables like {Nombre}, {Modelo}, {Precio}.`,
     });
     return response.text;
@@ -18,7 +18,7 @@ export const geminiService = {
   async generateMarketingImage(prompt: string, format: string) {
     const ai = getAIClient();
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-image',
+      model: 'gemini-1.5-flash',
       contents: {
         parts: [{ text: `A high quality professional automotive studio photograph of ${prompt}. Realistic lighting. 4k.` }]
       },
