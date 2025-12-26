@@ -28,3 +28,38 @@
         <small style="color: #9ca3af;">Resumen enviado a: woowestudio45@gmail.com</small>
     </div>
 </div>
+<script type="module">
+    import { geminiService } from '../../services/geminiService.ts';
+
+    const btnAnalyze = document.getElementById('btn_analyze');
+    const phoneList = document.getElementById('phone_list');
+    const campaignMsg = document.getElementById('campaign_message');
+    const aiReport = document.getElementById('ai_strategy_report');
+    const strategyText = document.getElementById('strategy_text');
+
+    btnAnalyze.onclick = async () => {
+        if (!phoneList.value || !campaignMsg.value) {
+            alert("Por favor, ingresa los números y el mensaje primero.");
+            return;
+        }
+
+        btnAnalyze.innerText = "Analizando estrategia...";
+        btnAnalyze.disabled = true;
+
+        try {
+            // Llamamos a la función que creamos antes en geminiService
+            const respuesta = await geminiService.analizarEstrategiaEnvio(
+                phoneList.value, 
+                campaignMsg.value
+            );
+
+            strategyText.innerText = respuesta;
+            aiReport.style.display = 'block';
+        } catch (error) {
+            alert("Error al conectar con la IA. Verifica tu API KEY.");
+        } finally {
+            btnAnalyze.innerText = "Consultar Soporte IA (Frecuencia y Horarios)";
+            btnAnalyze.disabled = false;
+        }
+    };
+</script>
