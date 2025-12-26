@@ -1,80 +1,60 @@
 import React, { useState } from 'react';
+// Importamos el servicio de IA que configuramos ayer
 import { geminiService } from './services/geminiService';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('mensajeria-ia');
+  const [seccionActual, setSeccionActual] = useState('mensajeria-ia');
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans">
-      {/* Barra Lateral de Navegación */}
-      <nav className="fixed w-64 h-full bg-slate-900 border-r border-slate-800 p-6">
-        <h1 className="text-2xl font-bold text-blue-500 mb-10">JEEMIA AI</h1>
-        <ul className="space-y-4">
-          <li onClick={() => setActiveTab('mensajeria-ia')} className={`cursor-pointer p-3 rounded ${activeTab === 'mensajeria-ia' ? 'bg-blue-600' : 'hover:bg-slate-800'}`}>1. Mensajería IA (Masivos)</li>
-          <li onClick={() => setActiveTab('base-datos')} className={`cursor-pointer p-3 rounded ${activeTab === 'base-datos' ? 'bg-blue-600' : 'hover:bg-slate-800'}`}>2. Mensajería con Base</li>
-          <li onClick={() => setActiveTab('imagenes')} className={`cursor-pointer p-3 rounded ${activeTab === 'imagenes' ? 'bg-blue-600' : 'hover:bg-slate-800'}`}>3. Imágenes (Nano Banana)</li>
-          <li onClick={() => setActiveTab('audios')} className={`cursor-pointer p-3 rounded ${activeTab === 'audios' ? 'bg-blue-600' : 'hover:bg-slate-800'}`}>4. Audios (Google AI)</li>
-          <li onClick={() => setActiveTab('dashboard')} className={`cursor-pointer p-3 rounded ${activeTab === 'dashboard' ? 'bg-blue-600' : 'hover:bg-slate-800'}`}>5. Dashboard Analítica</li>
+    <div style={{ display: 'flex', minHeight: 'screen', backgroundColor: '#020617', color: 'white', fontFamily: 'sans-serif' }}>
+      {/* Menú Lateral con tu nuevo orden */}
+      <nav style={{ width: '260px', backgroundColor: '#0f172a', borderRight: '1px solid #1e293b', padding: '20px' }}>
+        <h1 style={{ color: '#3b82f6', fontSize: '24px', fontWeight: 'bold', marginBottom: '40px' }}>JEEMIA AI</h1>
+        <ul style={{ listStyle: 'none', padding: 0 }}>
+          <li onClick={() => setSeccionActual('mensajeria-ia')} style={{ padding: '12px', cursor: 'pointer', borderRadius: '8px', backgroundColor: seccionActual === 'mensajeria-ia' ? '#2563eb' : 'transparent', marginBottom: '10px' }}>1. Mensajería IA</li>
+          <li onClick={() => setSeccionActual('base-datos')} style={{ padding: '12px', cursor: 'pointer', borderRadius: '8px', backgroundColor: seccionActual === 'base-datos' ? '#2563eb' : 'transparent', marginBottom: '10px' }}>2. Mensajería con Base</li>
+          <li onClick={() => setSeccionActual('imagenes')} style={{ padding: '12px', cursor: 'pointer', borderRadius: '8px', backgroundColor: seccionActual === 'imagenes' ? '#2563eb' : 'transparent', marginBottom: '10px' }}>3. Imágenes (Nano Banana)</li>
+          <li onClick={() => setSeccionActual('audios')} style={{ padding: '12px', cursor: 'pointer', borderRadius: '8px', backgroundColor: seccionActual === 'audios' ? '#2563eb' : 'transparent', marginBottom: '10px' }}>4. Audios (Google AI)</li>
+          <li onClick={() => setSeccionActual('dashboard')} style={{ padding: '12px', cursor: 'pointer', borderRadius: '8px', backgroundColor: seccionActual === 'dashboard' ? '#2563eb' : 'transparent' }}>5. Dashboard Analítica</li>
         </ul>
       </nav>
 
-      {/* Contenido Principal */}
-      <main className="ml-64 p-10">
-        {activeTab === 'mensajeria-ia' && (
-          <section>
-            <h2 className="text-3xl font-bold mb-6">Soporte IA - Envío de Números Masivos</h2>
-            <textarea id="num_input" className="w-full h-40 bg-slate-900 border border-slate-700 p-4 rounded-xl mb-4" placeholder="Pega tus números aquí (549...)" />
-            <textarea id="msg_input" className="w-full h-24 bg-slate-900 border border-slate-700 p-4 rounded-xl mb-6" placeholder="Escribe el mensaje de la campaña..." />
-            <button className="bg-blue-600 px-6 py-3 rounded-lg font-bold">Consultar Soporte IA (Horarios y Frecuencia)</button>
-          </section>
+      {/* Área de Trabajo Principal */}
+      <main style={{ flex: 1, padding: '40px' }}>
+        {seccionActual === 'mensajeria-ia' && (
+          <div>
+            <h2 style={{ fontSize: '28px', marginBottom: '20px' }}>🚀 Soporte IA - Mensajería Masiva</h2>
+            <p style={{ color: '#94a3b8', marginBottom: '20px' }}>Pega los números para analizar la estrategia de envío.</p>
+            <textarea id="telefonos" style={{ width: '100%', height: '150px', backgroundColor: '#1e293b', border: '1px solid #334155', borderRadius: '12px', color: 'white', padding: '15px', marginBottom: '15px' }} placeholder="54911223344, 54911556677..." />
+            <textarea id="mensaje" style={{ width: '100%', height: '100px', backgroundColor: '#1e293b', border: '1px solid #334155', borderRadius: '12px', color: 'white', padding: '15px', marginBottom: '20px' }} placeholder="Escribe el mensaje de tu campaña..." />
+            <button style={{ backgroundColor: '#2563eb', color: 'white', padding: '15px 30px', border: 'none', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer' }}>Consultar Soporte IA (Horarios y Frecuencia)</button>
+          </div>
         )}
 
-        {activeTab === 'base-datos' && (
-          <section>
-            <h2 className="text-3xl font-bold mb-6">Carga de Base de Datos</h2>
-            <div className="border-2 border-dashed border-slate-700 p-20 text-center rounded-2xl mb-6">Subir archivo Excel o CSV</div>
-            <textarea className="w-full h-24 bg-slate-900 border border-slate-700 p-4 rounded-xl" placeholder="Mensaje personalizado para la base..." />
-          </section>
-        )}
-
-        {activeTab === 'imagenes' && (
-          <section>
-            <h2 className="text-3xl font-bold mb-6">Generador Pro (Nano Banana)</h2>
-            <input className="w-full p-4 bg-slate-900 border border-slate-700 rounded-xl mb-4" placeholder="Describe la imagen que deseas crear..." />
-            <button className="bg-purple-600 px-6 py-3 rounded-lg font-bold">Generar Imagen Pro</button>
-          </section>
-        )}
-
-        {activeTab === 'audios' && (
-          <section>
-            <h2 className="text-3xl font-bold mb-6">Texto a Voz (Google AI Studio)</h2>
-            <textarea className="w-full h-32 bg-slate-900 border border-slate-700 p-4 rounded-xl mb-4" placeholder="Escribe el texto que Ana dirá por audio..." />
-            <button className="bg-emerald-600 px-6 py-3 rounded-lg font-bold">Crear Audio de Venta</button>
-          </section>
-        )}
-
-        {activeTab === 'dashboard' && (
-          <section>
-            <h2 className="text-3xl font-bold mb-6">Análisis de Campañas</h2>
-            <div className="grid grid-cols-3 gap-6 mb-10">
-              <div className="bg-blue-900/30 p-6 rounded-xl border border-blue-500">
-                <h3 className="text-blue-400 font-bold">CALIENTES</h3>
-                <p className="text-4xl mt-2">0</p>
+        {seccionActual === 'dashboard' && (
+          <div>
+            <h2 style={{ fontSize: '28px', marginBottom: '30px' }}>📊 Dashboard de Análisis</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '40px' }}>
+              <div style={{ padding: '20px', backgroundColor: 'rgba(59, 130, 246, 0.1)', border: '1px solid #3b82f6', borderRadius: '15px', textAlign: 'center' }}>
+                <h3 style={{ color: '#60a5fa' }}>CALIENTES</h3>
+                <p style={{ fontSize: '32px', margin: '10px 0' }}>0</p>
               </div>
-              <div className="bg-orange-900/30 p-6 rounded-xl border border-orange-500">
-                <h3 className="text-orange-400 font-bold">TIBIOS</h3>
-                <p className="text-4xl mt-2">0</p>
+              <div style={{ padding: '20px', backgroundColor: 'rgba(249, 115, 22, 0.1)', border: '1px solid #f97316', borderRadius: '15px', textAlign: 'center' }}>
+                <h3 style={{ color: '#fb923c' }}>TIBIOS</h3>
+                <p style={{ fontSize: '32px', margin: '10px 0' }}>0</p>
               </div>
-              <div className="bg-slate-800 p-6 rounded-xl border border-slate-600">
-                <h3 className="text-slate-400 font-bold">FRÍOS</h3>
-                <p className="text-4xl mt-2">0</p>
+              <div style={{ padding: '20px', backgroundColor: 'rgba(148, 163, 184, 0.1)', border: '1px solid #94a3b8', borderRadius: '15px', textAlign: 'center' }}>
+                <h3 style={{ color: '#cbd5e1' }}>FRÍOS</h3>
+                <p style={{ fontSize: '32px', margin: '10px 0' }}>0</p>
               </div>
             </div>
-            <div className="bg-slate-900 p-6 rounded-xl border border-slate-800 text-slate-400 text-center">
-              Tablas e informes diarios, semanales y mensuales aparecerán aquí tras el primer envío.
+            <div style={{ backgroundColor: '#0f172a', padding: '20px', borderRadius: '12px', border: '1px solid #1e293b', color: '#64748b', textAlign: 'center' }}>
+              Informes diarios y semanales se generarán automáticamente.
             </div>
-          </section>
+          </div>
         )}
+        
+        {/* Los otros módulos (2, 3 y 4) se activarán con el mismo estilo */}
       </main>
     </div>
   );
