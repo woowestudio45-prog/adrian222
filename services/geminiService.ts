@@ -1,59 +1,61 @@
+import { GoogleGenAI, Type } from "@google/genai";
 
-import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
-
+// Configuración del cliente usando la clave corregida en Vercel
 const getAIClient = () => {
   return new GoogleGenAI({ apiKey: process.env.VITE_GEMINI_API_KEY || '' });
 };
 
 export const geminiService = {
+  // 1. Soporte para Envíos Masivos y Análisis de Frecuencia
+  async analizarEstrategiaEnvio(numeros: string, mensajeBase: string) {
+    const ai = getAIClient();
+    const cantidadNumeros = numeros.split(',').length;
+
+    const prompt = `
+      Analiza esta campaña de mensajería masiva:
+      - Cantidad de contactos: ${cantidadNumeros}
+      - Mensaje propuesto: "${mensajeBase}"
+      
+      Proporciona una estrategia técnica para evitar bloqueos y maximizar apertura:
+      1. Frecuencia recomendada (mensajes por hora).
+      2. Mejores franjas horarias.
+      3. Sugerencia de variaciones en el mensaje para que no parezca spam.
+      4. Recomendación de pausas entre envíos.
+    `;
+
+    const response = await ai.getGenerativeModel({ model: 'gemini-1.5-flash' }).generateContent(prompt);
+    return response.response.text();
+  },
+
+  // 2. Generador de Guiones Personalizados (Ana de Jeemia Motors)
   async generateSalesScript(carModel: string, tone: string) {
     const ai = getAIClient();
-    const response = await ai.models.generateContent({
-      model: 'gemini-1.5-flash',
-      contents: `Write a friendly WhatsApp sales script for a car salesman. Model: ${carModel}. Tone: ${tone}. Start with "Hola {Nombre}, soy Ana de Jeemia Motors..." Use variables like {Nombre}, {Modelo}, {Precio}.`,
-    });
-    return response.text;
+    const model = ai.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    
+    const prompt = `Escribe un guion de ventas amigable para WhatsApp. 
+    Vendedor: Ana de Jeemia Motors. 
+    Modelo de auto: ${carModel}. 
+    Tono: ${tone}. 
+    Usa variables como {Nombre}, {Modelo}, {Precio}. Empieza con "Hola {Nombre}, soy Ana..."`;
+
+    const response = await model.generateContent(prompt);
+    return response.response.text();
   },
 
-  async generateMarketingImage(prompt: string, format: string) {
+  // 3. Análisis de Base de Datos y Notificación por Correo
+  async analizarBaseYNotificar(data: any, userMessage: string) {
     const ai = getAIClient();
-    const response = await ai.models.generateContent({
-      model: 'gemini-1.5-flash',
-      contents: {
-        parts: [{ text: `A high quality professional automotive studio photograph of ${prompt}. Realistic lighting. 4k.` }]
-      },
-      config: {
-        imageConfig: {
-          aspectRatio: format === '4:5' ? '4:5' : '1:1',
-        }
-      }
-    });
+    const model = ai.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-    for (const part of response.candidates[0].content.parts) {
-      if (part.inlineData) {
-        return `data:image/png;base64,${part.inlineData.data}`;
-      }
-    }
-    return null;
-  },
+    const prompt = `
+      Analiza la siguiente base de datos: ${JSON.stringify(data)}
+      El usuario quiere enviar este mensaje: "${userMessage}"
+      
+      Genera un reporte de segmentación y envía un resumen estratégico.
+      IMPORTANTE: Al finalizar, confirma que el reporte debe enviarse a woowestudio45@gmail.com.
+    `;
 
-  async analyzeLeads(data: any) {
-    const ai = getAIClient();
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: `Analyze these car sales leads: ${JSON.stringify(data)}. Provide a brief strategic recommendation.`,
-      config: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            optimumMessages: { type: Type.NUMBER },
-            suggestedHours: { type: Type.STRING },
-            strategyName: { type: Type.STRING }
-          }
-        }
-      }
-    });
-    return JSON.parse(response.text);
+    const response = await model.generateContent(prompt);
+    return response.response.text();
   }
 };
