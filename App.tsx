@@ -1,108 +1,76 @@
 import React, { useState } from 'react';
 
-export default function App() {
-  const [tab, setTab] = useState('envio');
+const App = () => {
+  const [tab, setTab] = useState('mensajeria');
   const [msg, setMsg] = useState('');
+  const [ratio, setRatio] = useState('1:1');
+  const [voz, setVoz] = useState('Fem 1');
 
-  const predefinidos = {
-    sr: "📍 *SAN RAFAEL:* Hola! Te contacto desde JEEMIA para informarte sobre...",
-    mz: "🍷 *MENDOZA:* ¡Hola! Estamos recorriendo la ciudad con nuevas propuestas...",
-    cl: "👤 *CLIENTES:* Estimado cliente, un gusto saludarte. Tenemos novedades..."
+  const plantillas = {
+    sr: "Hola San Rafael! 👋 Propuesta de JEEMIA para tu zona...",
+    mz: "¡Hola Mendoza! 🍷 Tenemos una oferta exclusiva...",
+    cl: "Estimado cliente, un gusto saludarte nuevamente..."
   };
 
   return (
-    <div className="flex min-h-screen bg-[#020617] text-white font-sans">
-      {/* SIDEBAR PRO */}
-      <nav className="w-72 bg-[#070e1e] border-r border-white/5 p-6 flex flex-col">
-        <h1 className="text-3xl font-black text-blue-500 italic mb-10">JEEMIA PRO</h1>
-        <div className="space-y-3 flex-1">
-          <button onClick={() => setTab('envio')} className={`w-full p-4 rounded-2xl text-left text-xs font-bold transition-all ${tab === 'envio' ? 'bg-blue-600 shadow-lg' : 'hover:bg-white/5 text-slate-500'}`}>🚀 ENVIAR MENSAJES</button>
-          <button onClick={() => setTab('base')} className={`w-full p-4 rounded-2xl text-left text-xs font-bold transition-all ${tab === 'base' ? 'bg-blue-600 shadow-lg' : 'hover:bg-white/5 text-slate-500'}`}>📊 BASE DE DATOS PRO</button>
-          <button onClick={() => setTab('multimedia')} className={`w-full p-4 rounded-2xl text-left text-xs font-bold transition-all ${tab === 'multimedia' ? 'bg-blue-600 shadow-lg' : 'hover:bg-white/5 text-slate-500'}`}>🎨 ARTE E IMÁGENES</button>
-          <button onClick={() => setTab('voz')} className={`w-full p-4 rounded-2xl text-left text-xs font-bold transition-all ${tab === 'voz' ? 'bg-blue-600 shadow-lg' : 'hover:bg-white/5 text-slate-500'}`}>🎙️ VOZ INTELIGENTE</button>
-          <button onClick={() => setTab('metricas')} className={`w-full p-4 rounded-2xl text-left text-xs font-bold transition-all ${tab === 'metricas' ? 'bg-blue-600 shadow-lg' : 'hover:bg-white/5 text-slate-500'}`}>📈 ESTADÍSTICAS ELITE</button>
+    <div className="flex min-h-screen bg-[#020617] text-slate-200 font-sans selection:bg-blue-500/30">
+      {/* SIDEBAR ELITE */}
+      <nav className="w-80 bg-[#070e1e] border-r border-white/5 p-8 flex flex-col shadow-2xl">
+        <h1 className="text-4xl font-black text-blue-500 tracking-tighter italic mb-12">JEEMIA PRO</h1>
+        <div className="space-y-4 flex-1">
+          {[
+            {id: 'mensajeria', n: 'ENVIAR MENSAJES', i: '🚀'},
+            {id: 'masivo', n: 'ENVÍO MASIVO + IA', i: '📊'},
+            {id: 'arte', n: 'NANO BANANA PRO', i: '🎨'},
+            {id: 'voz', n: 'GOOGLE AI STUDIO', i: '🎙️'},
+            {id: 'analisis', n: 'DASHBOARD ÉLITE', i: '📈'}
+          ].map(item => (
+            <button key={item.id} onClick={() => setTab(item.id)}
+              className={`w-full text-left p-5 rounded-3xl transition-all flex items-center gap-4 border ${
+                tab === item.id ? 'bg-blue-600 border-blue-400 shadow-xl text-white' : 'hover:bg-white/5 border-transparent text-slate-500'
+              }`}>
+              <span className="text-2xl">{item.i}</span>
+              <span className="text-xs font-black tracking-widest">{item.n}</span>
+            </button>
+          ))}
         </div>
       </nav>
 
-      <main className="flex-1 p-10 bg-slate-950">
-        {tab === 'envio' && (
-          <div className="max-w-5xl animate-in fade-in duration-500">
-            <h2 className="text-4xl font-black mb-8 italic uppercase tracking-tighter">Consola de Envío</h2>
-            
-            <div className="space-y-6">
-              <div className="bg-slate-900 p-6 rounded-[30px] border border-white/5">
-                <label className="text-[10px] font-black text-blue-500 uppercase tracking-widest mb-3 block">1. Lista de Números</label>
-                <textarea className="w-full h-32 bg-slate-950 border border-white/10 rounded-2xl p-4 text-blue-400 font-mono" placeholder="2615999995, 261XXXXXXX..." />
+      <main className="flex-1 p-12 overflow-y-auto">
+        
+        {/* 1. ENVIAR SOLO + ADJUNTOS */}
+        {tab === 'mensajeria' && (
+          <div className="max-w-5xl space-y-8 animate-in fade-in duration-500">
+            <h2 className="text-5xl font-black italic tracking-tighter text-white">Consola de Envío Directo</h2>
+            <div className="bg-[#0f172a] p-8 rounded-[40px] border border-white/5 shadow-2xl space-y-6">
+              <div className="flex gap-2">
+                <button onClick={() => setMsg(plantillas.sr)} className="px-4 py-2 bg-slate-800 hover:bg-blue-600 rounded-xl text-[10px] font-bold transition-all uppercase">San Rafael</button>
+                <button onClick={() => setMsg(plantillas.mz)} className="px-4 py-2 bg-slate-800 hover:bg-blue-600 rounded-xl text-[10px] font-bold transition-all uppercase">Mendoza</button>
+                <button onClick={() => setMsg(plantillas.cl)} className="px-4 py-2 bg-slate-800 hover:bg-blue-600 rounded-xl text-[10px] font-bold transition-all uppercase">Clientes</button>
               </div>
-
-              <div className="bg-slate-900 p-6 rounded-[30px] border border-white/5">
-                <div className="flex justify-between mb-4">
-                  <label className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">2. Escribir Mensaje (Campo Gigante)</label>
-                  <div className="flex gap-2">
-                    <button onClick={() => setMsg(predefinidos.sr)} className="px-3 py-1 bg-blue-600 rounded-lg text-[9px] font-bold uppercase">San Rafael</button>
-                    <button onClick={() => setMsg(predefinidos.mz)} className="px-3 py-1 bg-blue-600 rounded-lg text-[9px] font-bold uppercase">Mendoza</button>
-                    <button onClick={() => setMsg(predefinidos.cl)} className="px-3 py-1 bg-blue-600 rounded-lg text-[9px] font-bold uppercase">Clientes</button>
-                  </div>
-                </div>
-                <textarea 
-                  value={msg} 
-                  onChange={(e) => setMsg(e.target.value)}
-                  className="w-full h-80 bg-slate-950 border border-white/10 rounded-2xl p-6 text-lg text-white resize-none outline-none focus:border-emerald-500 transition-all" 
-                  placeholder="Redacta tu mensaje comercial aquí..." 
-                />
+              <textarea 
+                value={msg} onChange={(e) => setMsg(e.target.value)}
+                className="w-full h-80 bg-slate-950 border border-white/5 p-8 rounded-[32px] text-white text-xl outline-none focus:border-blue-500 transition-all" 
+                placeholder="Redacte su mensaje aquí..." 
+              />
+              <div className="p-6 border-2 border-dashed border-slate-800 rounded-3xl flex items-center justify-between bg-slate-950/30">
+                <p className="text-sm font-bold text-slate-400 italic">📎 ADJUNTAR ARCHIVOS (FOTOS, PDF, VIDEOS)</p>
+                <input type="file" className="text-xs text-slate-500 file:bg-blue-600 file:border-0 file:rounded-full file:px-4 file:py-2 file:text-white file:font-bold" />
               </div>
-
-              <button className="w-full py-8 bg-emerald-600 hover:bg-emerald-500 rounded-[30px] text-3xl font-black uppercase tracking-tighter shadow-2xl transition-all active:scale-95">
-                ENVIAR SOLO
+              <button className="w-full py-8 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-[40px] text-4xl shadow-2xl transition-all active:scale-95 uppercase tracking-tighter">
+                ENVIAR
               </button>
             </div>
           </div>
         )}
 
-        {/* MODULOS PRO ACTUALIZADOS */}
-        {(tab === 'base' || tab === 'multimedia' || tab === 'voz') && (
-          <div className="max-w-4xl mx-auto text-center space-y-8 mt-10">
-            <div className="bg-slate-900 p-16 rounded-[50px] border border-white/5 shadow-2xl">
-              <h3 className="text-4xl font-black italic mb-6">Módulo {tab.toUpperCase()} PRO</h3>
-              <textarea className="w-full h-48 bg-slate-950 border border-white/10 rounded-3xl p-6 text-xl mb-6" placeholder="Ingrese los datos para procesar con IA..." />
-              <button className="w-full py-5 bg-blue-600 rounded-3xl font-black uppercase tracking-widest hover:bg-blue-500 transition-all">Ejecutar Proceso Inteligente</button>
-            </div>
-          </div>
-        )}
-
-        {tab === 'metricas' && (
-          <div className="space-y-8">
-            <h2 className="text-4xl font-black italic italic">Estadísticas de Impacto</h2>
-            <div className="grid grid-cols-4 gap-6">
-              <div className="bg-slate-900 p-8 rounded-[40px] border-l-4 border-red-500">
-                <p className="text-[10px] font-bold text-slate-500 uppercase">Calientes</p>
-                <p className="text-5xl font-black text-red-500">42</p>
-              </div>
-              <div className="bg-slate-900 p-8 rounded-[40px] border-l-4 border-orange-500">
-                <p className="text-[10px] font-bold text-slate-500 uppercase">Tibios</p>
-                <p className="text-5xl font-black text-orange-500">128</p>
-              </div>
-              <div className="bg-slate-900 p-8 rounded-[40px] border-l-4 border-blue-500">
-                <p className="text-[10px] font-bold text-slate-500 uppercase">Fríos</p>
-                <p className="text-5xl font-black text-blue-500">850</p>
-              </div>
-              <div className="bg-slate-900 p-8 rounded-[40px] border-l-4 border-emerald-500">
-                <p className="text-[10px] font-bold text-slate-500 uppercase">Efectividad</p>
-                <p className="text-5xl font-black text-emerald-500">14%</p>
-              </div>
-            </div>
-            <div className="bg-slate-900 p-8 rounded-[40px] border border-white/5">
-              <h4 className="font-black mb-4 uppercase text-xs text-blue-400">Registro de Envíos Diarios</h4>
-              <div className="bg-slate-950 p-6 rounded-2xl flex justify-between items-center border border-white/5">
-                <span className="font-bold">26/12/2025</span>
-                <span className="text-emerald-500 font-black">1,185 ENTREGADOS</span>
-                <span className="text-red-500 font-black">15 ERRORES</span>
-                <span className="bg-emerald-500/10 text-emerald-500 px-3 py-1 rounded-full text-[9px] font-black">COMPLETADO</span>
-              </div>
-            </div>
-          </div>
-        )}
-      </main>
-    </div>
-  );
-}
+        {/* 2. MASIVO + MODERADOR IA */}
+        {tab === 'masivo' && (
+          <div className="max-w-6xl space-y-8">
+            <h2 className="text-5xl font-black italic tracking-tighter text-white">Envío Masivo Inteligente</h2>
+            <div className="grid grid-cols-12 gap-8">
+              <div className="col-span-8 space-y-6">
+                <div className="bg-[#0f172a] p-8 rounded-[40px] border border-white/5 shadow-2xl">
+                  <label className="text-[10px] font-black text-blue-500 uppercase tracking-widest mb-4 block">Base de Números</label>
+                  <textarea className="w-full h-32 bg-slate-950 border border-white/5 p-4 rounded-2xl text-blue-400 font-mono mb-6" placeholder="2615999995, 261XXXXXXX..." />
+                  <label className="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-4 block">Mensaje
