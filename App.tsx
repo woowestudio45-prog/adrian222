@@ -1,100 +1,133 @@
 import React, { useState } from 'react';
 
 const App = () => {
-  const [activeTab, setActiveTab] = useState('mensajeria-ia');
-  const [status, setStatus] = useState('');
-  const [mensajePersonalizado, setMensajePersonalizado] = useState('');
+  const [activeTab, setActiveTab] = useState('mensajeria');
+  const [mensaje, setMensaje] = useState('');
   
-  const MI_NUMERO = "549261599995";
-
   const plantillas = {
-    san_rafael: "Hola! 👋 Saludos a toda la gente de San Rafael. Te contacto de JEEMIA para...",
-    mendoza: "¡Hola Mendoza! 🍷 Estamos recorriendo la ciudad con nuevas propuestas de...",
-    clientes: "Estimado cliente, es un gusto saludarte. Tenemos una actualización para vos..."
-  };
-
-  const ejecutarEnvioDirecto = (idLista: string) => {
-    const lista = (document.getElementById(idLista) as HTMLTextAreaElement).value;
-    const msg = mensajePersonalizado || "Hola, te escribo de JEEMIA PRO";
-    
-    if(!lista) return alert("Por favor, ingresa los números");
-    
-    setStatus('🚀 Enviando...');
-    const numeros = lista.split(',').map(n => n.trim());
-    
-    numeros.forEach((num, index) => {
-      let limpio = num.replace(/\D/g, '');
-      if (!limpio.startsWith('549')) limpio = '549' + limpio;
-      
-      setTimeout(() => {
-        const url = `https://web.whatsapp.com/send?phone=${limpio}&text=${encodeURIComponent(msg)}`;
-        window.open(url, '_blank');
-      }, index * 4000); 
-    });
+    san_rafael: "Hola San Rafael! 👋 Te escribo de JEEMIA para comentarte que...",
+    mendoza: "¡Hola Mendoza! 🍷 Tenemos una propuesta exclusiva para la zona...",
+    clientes: "Estimado cliente de JEEMIA, te contacto para darte seguimiento..."
   };
 
   return (
-    <div className="flex min-h-screen bg-[#020617] text-white font-sans selection:bg-blue-500/30">
-      {/* SIDEBAR PRO */}
-      <nav className="w-80 bg-[#0f172a] border-r border-slate-800 p-8 flex flex-col shadow-2xl">
-        <div className="mb-10">
+    <div className="flex min-h-screen bg-[#020617] text-slate-200 font-sans">
+      {/* SIDEBAR ELITE */}
+      <nav className="w-80 bg-[#070e1e] border-r border-white/5 p-8 flex flex-col shadow-2xl">
+        <div className="mb-12">
           <h1 className="text-4xl font-black text-blue-500 tracking-tighter italic">JEEMIA PRO</h1>
-          <p className="text-[10px] text-slate-500 tracking-[0.3em] uppercase mt-1 font-bold">Sales Intelligence Suite</p>
+          <div className="h-1 w-12 bg-blue-600 mt-2 rounded-full"></div>
         </div>
         
-        <div className="space-y-3 flex-1">
+        <div className="space-y-4 flex-1">
           {[
-            {id: 'mensajeria-ia', n: '1. Mensajería Directa', i: '🚀'},
-            {id: 'base-datos', n: '2. Base de Datos Pro', i: '📊'},
-            {id: 'imagenes', n: '3. Generador de Arte', i: '🎨'},
-            {id: 'audios', n: '4. Voz Inteligente (AI)', i: '🎙️'},
-            {id: 'analisis', n: '5. Métricas Avanzadas', i: '📈'}
+            {id: 'mensajeria', n: 'CONSOLA DE ENVÍO', i: '🚀'},
+            {id: 'base', n: 'BASE DE DATOS AI', i: '📊'},
+            {id: 'arte', n: 'GENERADOR DE ARTE', i: '🎨'},
+            {id: 'voz', n: 'VOZ INTELIGENTE', i: '🎙️'},
+            {id: 'metricas', n: 'MÉTRICAS ÉLITE', i: '📈'}
           ].map(item => (
             <button key={item.id} onClick={() => setActiveTab(item.id)}
-              className={`w-full text-left p-5 rounded-[24px] transition-all flex items-center gap-4 border ${
-                activeTab === item.id ? 'bg-blue-600 border-blue-400 shadow-xl shadow-blue-900/40' : 'bg-transparent border-transparent hover:bg-slate-800 text-slate-400'
+              className={`w-full text-left p-5 rounded-3xl transition-all flex items-center gap-4 border ${
+                activeTab === item.id ? 'bg-blue-600 border-blue-400 shadow-lg shadow-blue-900/40 text-white' : 'hover:bg-white/5 border-transparent text-slate-500'
               }`}>
               <span className="text-2xl">{item.i}</span>
-              <span className="text-sm font-black tracking-tight">{item.n}</span>
+              <span className="text-xs font-black tracking-widest">{item.n}</span>
             </button>
           ))}
         </div>
-
-        <div className="mt-auto p-5 bg-slate-900/50 rounded-3xl border border-slate-800">
-          <p className="text-[10px] text-slate-500 mb-1 font-black tracking-widest uppercase italic">WhatsApp Activo</p>
-          <p className="text-blue-400 font-mono text-sm">+{MI_NUMERO}</p>
-        </div>
       </nav>
 
-      {/* CONTENIDO PRINCIPAL */}
-      <main className="flex-1 p-12 overflow-y-auto bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-900/20 via-slate-950 to-slate-950">
+      {/* CUERPO PRINCIPAL */}
+      <main className="flex-1 p-12 overflow-y-auto bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/10 via-slate-950 to-slate-950">
         
-        {/* PESTAÑA 1: MENSAJERÍA DIRECTA CON CAMPOS GRANDES */}
-        {activeTab === 'mensajeria-ia' && (
-          <div className="max-w-5xl space-y-8 animate-in fade-in duration-500">
-            <h2 className="text-5xl font-black italic tracking-tighter">Consola de Envío</h2>
+        {activeTab === 'mensajeria' && (
+          <div className="max-w-6xl space-y-8">
+            <h2 className="text-5xl font-black italic tracking-tighter text-white">Consola de Envío Directo</h2>
             
-            <div className="grid grid-cols-12 gap-8">
-              <div className="col-span-8 space-y-6">
-                <div className="bg-slate-900/80 backdrop-blur-md p-8 rounded-[40px] border border-slate-800 shadow-inner">
-                  <label className="text-xs font-black text-blue-500 uppercase mb-4 block tracking-[0.2em]">📍 1. Destinatarios (Separados por coma)</label>
-                  <textarea id="num_masivo" className="w-full h-40 bg-slate-950/50 border border-slate-800 p-6 rounded-3xl text-blue-300 font-mono text-lg focus:border-blue-500 outline-none transition-all" placeholder="2615999995, 261XXXXXXX..." />
+            <div className="grid grid-cols-12 gap-10">
+              <div className="col-span-8 space-y-8">
+                {/* NUMEROS */}
+                <div className="bg-[#0f172a] p-8 rounded-[40px] border border-white/5 shadow-2xl">
+                  <label className="text-[10px] font-black text-blue-500 uppercase tracking-[0.3em] mb-4 block">1. Lista de Destinos (Mendoza / Argentina)</label>
+                  <textarea className="w-full h-32 bg-slate-950/50 border border-white/5 p-6 rounded-3xl text-blue-400 font-mono text-lg focus:border-blue-500 transition-all outline-none" placeholder="2615999995, 261XXXXXXX..." />
                 </div>
 
-                <div className="bg-slate-900/80 p-8 rounded-[40px] border border-slate-800">
-                  <label className="text-xs font-black text-blue-500 uppercase mb-4 block tracking-[0.2em]">📝 2. Redacción del Mensaje (Campo Amplio)</label>
+                {/* MENSAJE GIGANTE */}
+                <div className="bg-[#0f172a] p-8 rounded-[40px] border border-white/5 shadow-2xl">
+                  <div className="flex justify-between items-center mb-6">
+                    <label className="text-[10px] font-black text-emerald-500 uppercase tracking-[0.3em]">2. Redacción del Mensaje Profesional</label>
+                    <div className="flex gap-2">
+                      <button onClick={() => setMensaje(plantillas.san_rafael)} className="px-4 py-2 bg-slate-800 hover:bg-blue-600 rounded-xl text-[10px] font-bold transition-all">SAN RAFAEL</button>
+                      <button onClick={() => setMensaje(plantillas.mendoza)} className="px-4 py-2 bg-slate-800 hover:bg-blue-600 rounded-xl text-[10px] font-bold transition-all">MENDOZA</button>
+                      <button onClick={() => setMensaje(plantillas.clientes)} className="px-4 py-2 bg-slate-800 hover:bg-blue-600 rounded-xl text-[10px] font-bold transition-all">CLIENTES</button>
+                    </div>
+                  </div>
                   <textarea 
-                    value={mensajePersonalizado}
-                    onChange={(e) => setMensajePersonalizado(e.target.value)}
-                    className="w-full h-72 bg-slate-950/50 border border-slate-800 p-6 rounded-3xl text-slate-200 text-lg focus:border-emerald-500 outline-none transition-all resize-none" 
-                    placeholder="Escribe aquí tu propuesta comercial detallada..." 
+                    value={mensaje}
+                    onChange={(e) => setMensaje(e.target.value)}
+                    className="w-full h-96 bg-slate-950/50 border border-white/5 p-8 rounded-[32px] text-white text-xl focus:border-emerald-500 transition-all outline-none resize-none" 
+                    placeholder="Escribe aquí tu propuesta comercial..." 
                   />
-                  
-                  <div className="mt-6 flex gap-3">
-                    <button onClick={() => setMensajePersonalizado(plantillas.san_rafael)} className="px-4 py-2 bg-slate-800 hover:bg-blue-600 rounded-full text-[10px] font-black uppercase tracking-tighter transition-all">📍 San Rafael</button>
-                    <button onClick={() => setMensajePersonalizado(plantillas.mendoza)} className="px-4 py-2 bg-slate-800 hover:bg-blue-600 rounded-full text-[10px] font-black uppercase tracking-tighter transition-all">📍 Mendoza</button>
-                    <button onClick={() => setMensajePersonalizado(plantillas.clientes)} className="px-4 py-2 bg-slate-800 hover:bg-blue-600 rounded-full text-[10px] font-black uppercase tracking-tighter transition-all">👥 Clientes</button>
+                </div>
+
+                <button className="w-full py-10 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-[45px] text-4xl shadow-2xl shadow-emerald-900/40 transition-all transform hover:scale-[1.01] uppercase tracking-tighter">
+                  ENVIAR SOLO
+                </button>
+              </div>
+
+              {/* BARRA LATERAL IA */}
+              <div className="col-span-4 space-y-6">
+                <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-8 rounded-[40px] shadow-xl text-white">
+                  <h3 className="font-black text-xl mb-6 italic uppercase">Estrategia IA</h3>
+                  <div className="space-y-4">
+                    <button className="w-full py-4 bg-white/10 hover:bg-white/20 rounded-2xl text-[10px] font-black uppercase tracking-widest backdrop-blur-md transition-all">Optimizar para Mendoza</button>
+                    <button className="w-full py-4 bg-white/10 hover:bg-white/20 rounded-2xl text-[10px] font-black uppercase tracking-widest backdrop-blur-md transition-all">Evitar Filtro Spam</button>
+                    <button className="w-full py-4 bg-white/10 hover:bg-white/20 rounded-2xl text-[10px] font-black uppercase tracking-widest backdrop-blur-md transition-all">Mejorar Tono de Voz</button>
                   </div>
                 </div>
+                
+                <div className="bg-[#0f172a] p-8 rounded-[40px] border border-white/5">
+                   <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Adjunto Activo</p>
+                   <div className="p-6 border-2 border-dashed border-slate-800 rounded-3xl text-center cursor-pointer hover:border-blue-500 transition-all">
+                      <span className="text-3xl block mb-2">📄</span>
+                      <span className="text-[10px] font-bold text-slate-400">CARGAR PDF COMERCIAL</span>
+                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
-                <div className="bg-blue-600/5 p-8 rounded-[40px] border-2 border-dashed
+        {/* MODULO ARTE / VOZ / BASE CON DISEÑO PRO */}
+        {(activeTab === 'arte' || activeTab === 'voz' || activeTab === 'base') && (
+          <div className="max-w-4xl mx-auto mt-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <div className="bg-[#0f172a] p-16 rounded-[60px] border border-white/5 shadow-2xl relative overflow-hidden text-center">
+              <div className="absolute top-0 right-0 p-12 opacity-5 text-[200px] font-black italic">
+                {activeTab === 'arte' ? 'ART' : activeTab === 'voz' ? 'VOX' : 'DATA'}
+              </div>
+              <h2 className="text-5xl font-black mb-8 italic text-white uppercase tracking-tighter">
+                {activeTab === 'arte' ? 'Generador de Imágenes' : activeTab === 'voz' ? 'Texto a Voz Humana' : 'Gestor de Base de Datos'}
+              </h2>
+              <textarea 
+                className="w-full h-56 bg-slate-950 border border-white/5 p-10 rounded-[40px] text-2xl text-blue-100 mb-10 focus:border-blue-500 outline-none transition-all shadow-inner" 
+                placeholder={activeTab === 'arte' ? "Describe la imagen publicitaria que deseas..." : activeTab === 'voz' ? "Escribe el guion para convertirlo en audio..." : "Pega aquí tu lista de clientes para depurar..."} 
+              />
+              <button className="px-20 py-8 bg-blue-600 hover:bg-blue-500 rounded-full font-black text-xl uppercase tracking-[0.2em] transition-all shadow-xl shadow-blue-900/40">
+                PROCESAR CON INTELIGENCIA ARTIFICIAL
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* METRICAS AVANZADAS */}
+        {activeTab === 'metricas' && (
+          <div className="space-y-12 animate-in fade-in duration-700">
+            <div className="flex justify-between items-end">
+              <h2 className="text-6xl font-black italic tracking-tighter text-white">Análisis de Impacto</h2>
+              <button className="px-8 py-4 bg-white text-black font-black text-xs rounded-2xl uppercase hover:bg-blue-600 hover:text-white transition-all">Descargar Informe Global</button>
+            </div>
+            
+            <div className="grid grid-cols-4 gap-8">
+              {[{l:'INTERÉS CRÍTICO', v:'42', c:'text-red-500', s:'CALIENTES'}, {l:'POTENCIALES', v:'128', c:'text-orange-500', s:'TIBIOS'}, {l:'ALCANCE TOTAL', v:'850', c:'text-blue-500', s:'FRÍOS'}, {l:'EFECTIVIDAD', v:'14.2%', c:'text-emerald-500', s:'CONVERSIÓN'}].map(s => (
+                <div key={s.l} className="bg-[#0f172a] p-10 rounded-[50px] border border-white/5
