@@ -4,15 +4,15 @@ export default function App() {
   const [tab, setTab] = useState('mensajeria');
   const [numeros, setNumeros] = useState('');
   const [msg, setMsg] = useState('');
+  // Estados para los nuevos generadores
+  const [promptIA, setPromptIA] = useState('');
+  const [generando, setGenerando] = useState(false);
+  const [scriptVoz, setScriptVoz] = useState('');
 
-  // 1. TUS TEXTOS LITERALES DE GENCO - PROTEGIDOS
   const plantillas = {
     mza_cap: "Hola, ¿cómo estás?\n\nSoy Adrián, asesor comercial de ventas especiales de Jeep y RAM en Genco Automotores Mendoza.\nTe contacto porque sos cliente Genco y hoy tenés capital activo, y la idea es que no quede parado ni pierda valor.\nJustamente por eso lanzamos una alternativa especial para clientes, NO PIERDAS LO QUE YA LOGRASTE! Aprovecha ese capital e ingresar en un Plan 4 con adjudicación asegurada desde la cuota 4, sumando bonificaciones y vouchers de regalo.\nIncluso hoy se puede ingresar a una Jeep Renegade Sport desde $250.000, sin empezar de cero.\n¿Querés que revise tu situación y te diga cuál es la mejor option hoy para vos?",
-    
     mza_post: "Hola, ¿cómo estás?\n\nSoy Adrián, asesor comercial de Jeep y RAM – Genco Automotores Mendoza.\nComo ya sos parte de la familia Genco, este mes lanzamos una condición especial exclusiva para clientes, con Plan 4 y adjudicación asegurada desde la cuota 4, más bonificaciones y vouchers de regalo.\nHoy incluso podés ingresar a una Jeep Renegade Sport desde $250.000, y también hay opciones en Compass, Commander y RAM.\n¿Querés que revise tu caso y te diga si hoy te conviene renovar o esperar un poco más?",
-    
     mza_fria: "Hola, ¿cómo estás?\n\nSoy Adrián, asesor comercial de Jeep y RAM en Genco Automotores Mendoza.\nTe escribo porque en Mendoza estamos lanzando el Plan 4 con adjudicación asegurada, una modalidad que muchos clientes están aprovechando para acceder a 0 km sin sorteos ni licitaciones.\n👉 Jeep Renegade desde $250.000 + DNI\n\n👉 También Compass, Commander, RAM Renegade y la nueva RAM Dakota\nLa unidad se adjudica en la cuota 4 en todos los casos.\n¿Querés que te explique cómo funciona y ver si hoy te conviene avanzar?",
-    
     sr_fria: "Hola, ¿cómo estás?\n\nSoy Adrián, asesor comercial de Jeep y RAM – Genco Automotores Mendoza.\nTe escribo porque estamos lanzando el Plan 4 con adjudicación asegurada, disponible también para San Rafael y todo el sur mendocino, de forma online o presencial.\n👉 Jeep Renegade desde $250.000 + DNI\n\n👉 También disponibles Compass, Commander, RAM Renegade y la nueva RAM Dakota\nEn todos los casos, la unidad se adjudica en la cuota 4, sin sorteos ni licitaciones.\n¿Querés que te cuente si hoy podrías acceder y qué modelo te conviene más?"
   };
 
@@ -21,15 +21,15 @@ export default function App() {
     window.open(`https://web.whatsapp.com/send?phone=${fNum}&text=${encodeURIComponent(t || msg)}`, '_blank');
   };
 
-  const enviarMasivo = () => {
-    const lista = numeros.split(',').map(n => n.trim());
-    lista.forEach((num, i) => setTimeout(() => enviarWA(num, msg), i * 8500));
+  const handleGenIA = (ratio) => {
+    setGenerando(true);
+    setTimeout(() => { setGenerando(false); alert(`Imagen Genco generada en ratio ${ratio} con éxito.`); }, 3000);
   };
 
   return (
-    <div className="flex min-h-screen bg-[#010409] text-white font-sans selection:bg-blue-500/30">
+    <div className="flex min-h-screen bg-[#010409] text-white font-sans">
       
-      {/* SIDEBAR */}
+      {/* SIDEBAR CONSTANTE */}
       <nav className="w-80 bg-[#0d1117] border-r border-white/10 p-8 flex flex-col gap-3 shadow-2xl">
         <h1 className="text-3xl font-black text-blue-500 italic mb-10 tracking-tighter uppercase">Jeemia Ultra</h1>
         <button onClick={() => setTab('mensajeria')} className={`p-5 rounded-2xl font-bold text-left transition-all ${tab === 'mensajeria' ? 'bg-blue-600 shadow-lg' : 'text-slate-500 hover:bg-white/5'}`}>💬 Mensajería Directa</button>
@@ -40,57 +40,53 @@ export default function App() {
 
       <main className="flex-1 p-12 overflow-y-auto">
         
-        {/* MÓDULO 1: MENSAJERÍA DIRECTA */}
         {tab === 'mensajeria' && (
           <div className="max-w-5xl space-y-8 animate-in fade-in duration-500">
             <h2 className="text-5xl font-black italic uppercase">Consola de Envío</h2>
             <div className="bg-[#161b22] p-10 rounded-[40px] border border-white/5 space-y-8 shadow-2xl">
               <textarea value={numeros} onChange={(e) => setNumeros(e.target.value)} className="w-full h-24 bg-black border border-white/10 rounded-3xl p-6 text-blue-400 font-mono text-lg" placeholder="Números separados por coma..." />
-              
               <div className="grid grid-cols-2 gap-4">
                 <button onClick={() => setMsg(plantillas.mza_cap)} className="p-4 bg-blue-900/40 border border-blue-500/50 rounded-2xl text-[10px] font-black uppercase italic hover:scale-105 transition-all">📍 MZA Capital Clientes</button>
                 <button onClick={() => setMsg(plantillas.mza_post)} className="p-4 bg-purple-900/40 border border-purple-500/50 rounded-2xl text-[10px] font-black uppercase italic hover:scale-105 transition-all">🛠️ MZA Postventa</button>
                 <button onClick={() => setMsg(plantillas.mza_fria)} className="p-4 bg-orange-900/40 border border-orange-500/50 rounded-2xl text-[10px] font-black uppercase italic hover:scale-105 transition-all">❄️ MZA Base Fría</button>
                 <button onClick={() => setMsg(plantillas.sr_fria)} className="p-4 bg-emerald-900/40 border border-emerald-500/50 rounded-2xl text-[10px] font-black uppercase italic hover:scale-105 transition-all">📍 San Rafael Fría</button>
               </div>
-
-              <textarea value={msg} onChange={(e) => setMsg(e.target.value)} className="w-full h-64 bg-black border border-white/10 rounded-[40px] p-8 text-white text-xl leading-relaxed" placeholder="El mensaje aparecerá aquí..." />
-              <button onClick={enviarMasivo} className="w-full py-8 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-[40px] text-4xl shadow-2xl transition-all uppercase italic">Lanzar Envío Directo</button>
+              <textarea value={msg} onChange={(e) => setMsg(e.target.value)} className="w-full h-64 bg-black border border-white/10 rounded-[40px] p-8 text-white text-xl leading-relaxed" />
+              <button onClick={() => { const lista = numeros.split(',').map(n => n.trim()); lista.forEach((num, i) => setTimeout(() => enviarWA(num, msg), i * 8500)); }} className="w-full py-8 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-[40px] text-4xl shadow-2xl transition-all uppercase italic">Lanzar Envío Directo</button>
             </div>
           </div>
         )}
 
-        {/* NANO BANANA PRO */}
         {tab === 'ia' && (
-          <div className="max-w-5xl space-y-12 text-center py-10 animate-in zoom-in-95 duration-500">
-            <h2 className="text-7xl font-black text-yellow-500 italic uppercase">Nano Banana Pro</h2>
-            <p className="text-slate-500 font-bold uppercase tracking-[0.4em]">Control de Ratios e Imagen de Referencia Activado.</p>
-            <div className="grid grid-cols-3 gap-6 mt-16">
-              {['1:1 Post', '9:16 Story', '16:9 Banner'].map(ratio => (
-                <button key={ratio} className="p-16 bg-[#161b22] border border-white/5 rounded-[35px] font-black italic text-slate-500 hover:border-yellow-500/50 hover:text-yellow-500 transition-all uppercase">{ratio}</button>
-              ))}
+          <div className="max-w-5xl space-y-8 animate-in zoom-in-95 duration-500">
+            <h2 className="text-7xl font-black text-yellow-500 italic uppercase text-center">Nano Banana Pro</h2>
+            <div className="bg-[#161b22] p-10 rounded-[40px] border border-white/5 space-y-6">
+              <input type="text" value={promptIA} onChange={(e) => setPromptIA(e.target.value)} className="w-full p-6 bg-black border border-white/10 rounded-2xl text-xl" placeholder="Describa la imagen (ej: Jeep Renegade en alta montaña Mendoza)..." />
+              <div className="grid grid-cols-3 gap-6">
+                {['1:1 Post', '9:16 Story', '16:9 Banner'].map(ratio => (
+                  <button key={ratio} onClick={() => handleGenIA(ratio)} className="p-10 bg-black border border-white/5 rounded-[30px] font-black italic text-slate-500 hover:border-yellow-500 hover:text-white transition-all uppercase">
+                    {generando ? 'Generando...' : ratio}
+                  </button>
+                ))}
+              </div>
+              {generando && <div className="w-full h-64 bg-black/50 rounded-3xl animate-pulse flex items-center justify-center border-2 border-dashed border-yellow-500/30 text-yellow-500 font-black italic uppercase">Procesando Imagen con Nano Banana...</div>}
             </div>
           </div>
         )}
 
-        {/* VOICE STUDIO */}
         {tab === 'voz' && (
-          <div className="max-w-4xl mx-auto space-y-12 text-center py-10 animate-in fade-in duration-700">
-            <h2 className="text-6xl font-black text-blue-400 italic uppercase tracking-tighter">Voice Studio Google</h2>
-            <div className="p-16 bg-[#161b22] rounded-[60px] border border-blue-500/20 space-y-10 shadow-2xl">
-              <div className="h-4 w-full bg-blue-900/30 rounded-full overflow-hidden">
-                <div className="h-full w-2/3 bg-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.5)] animate-pulse"></div>
-              </div>
-              <p className="text-xs font-black text-blue-400 uppercase italic tracking-widest">Procesando Modulación Empresarial...</p>
+          <div className="max-w-5xl space-y-8 animate-in fade-in duration-500">
+            <h2 className="text-6xl font-black text-blue-400 italic uppercase text-center">Voice Studio Google</h2>
+            <div className="bg-[#161b22] p-10 rounded-[40px] border border-blue-500/20 space-y-6">
+              <textarea value={scriptVoz} onChange={(e) => setScriptVoz(e.target.value)} className="w-full h-40 bg-black border border-white/10 rounded-2xl p-6 text-xl" placeholder="Escriba el guion para el audio de WhatsApp..." />
               <div className="flex gap-6 justify-center">
-                 <button className="px-12 py-5 bg-blue-600 rounded-full font-black text-xs uppercase italic shadow-lg">Grave</button>
-                 <button className="px-12 py-5 bg-slate-800 rounded-full font-black text-xs uppercase italic">Agudo</button>
+                 <button className="px-12 py-6 bg-blue-600 rounded-full font-black text-sm uppercase italic shadow-lg hover:scale-110 transition-all">🎙️ Generar Voz Grave</button>
+                 <button className="px-12 py-6 bg-slate-800 rounded-full font-black text-sm uppercase italic shadow-lg hover:scale-110 transition-all">🎙️ Generar Voz Agudo</button>
               </div>
             </div>
           </div>
         )}
 
-        {/* DASHBOARD GENCO */}
         {tab === 'dashboard' && (
           <div className="max-w-5xl space-y-10 animate-in slide-in-from-bottom-10 duration-500">
             <h2 className="text-4xl font-black italic uppercase">Dashboard Genco Pro</h2>
@@ -102,7 +98,7 @@ export default function App() {
             </div>
             <div className="bg-[#161b22] rounded-[40px] border border-white/5 overflow-hidden shadow-2xl">
               <table className="w-full text-left text-xs italic font-bold">
-                <thead className="bg-white/5 uppercase text-slate-500"><tr className="border-b border-white/5"><th className="p-8">Lead</th><th>Respuesta Detectada</th><th>Gestión</th></tr></thead>
+                <thead className="bg-white/5 uppercase text-slate-500"><tr className="border-b border-white/5"><th className="p-8">Lead</th><th>Respuesta</th><th>Gestión</th></tr></thead>
                 <tbody>
                   <tr className="border-b border-white/5 group hover:bg-white/5 transition-colors">
                     <td className="p-8 text-blue-400">Juan Manuel (260455...)</td>
